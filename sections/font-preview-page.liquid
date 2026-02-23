@@ -1,0 +1,55 @@
+{{ 'font-preview-la.css' | asset_url | stylesheet_tag }}
+{{ 'font-preview.js' | asset_url | script_tag }}
+
+<section class="la-font-preview" data-font-preview-page>
+  <div class="la-font-preview__bg" aria-hidden="true"></div>
+
+  <div class="font-preview-wrap" data-font-preview-root>
+    <div class="font-preview-head">
+      <h1 class="font-preview-title">Schriften-Vorschau</h1>
+
+      <div class="font-preview-input-wrap">
+        <input
+          class="font-preview-input"
+          type="text"
+          value="LaserArt Germany"
+          placeholder="Text eingeben…"
+          data-font-preview-input
+        >
+        <div class="font-preview-hint">
+          Tipp: Für Zeilenumbruch im Textfeld einfach <strong>\n</strong> verwenden (z.B. "LaserArt\nGermany").
+        </div>
+      </div>
+    </div>
+
+    {% assign fonts = "01|Alicia,02|Hello Valentina,03|Daily,04|Hello Autumn,05|Butterfly Script,06|Wedding,07|The Smile,08|Soulmate,09|Gamela,10|I Love You,11|Dear Heart,12|Enchanting,13|Chenno,14|Snell Roundhand,15|Savoye LET,16|Whilona Type,17|love craft,18|hello honey,19|Snowing,20|Baby Boho,21|Hannah Script,22|Brush Script,23|Better,24|Yustia,25|Handwriting Regular,26|Hello Solvita,27|Chocoladine,28|Glamela Script,29|Hanna Script,30|Hello Solvita,31|I Love You,32|Mattalia,33|Soulmate,34|Baby Boho Script,35|Enchanting Script,36|Handwriting,37|Joseph Sophia,38|Little Love,39|Maddison" | split: "," %}
+
+    <div class="font-preview-grid">
+      {% for item in fonts %}
+        {% assign p = item | split: "|" %}
+        {% assign num = p[0] %}
+        {% assign name = p[1] %}
+
+        <div class="font-preview-card">
+          <div class="font-preview-name">LaserArt Schrift {{ num }} – {{ name }}</div>
+          <div class="font-preview-text font-{{ num }}" data-font-preview-text>
+            LaserArt Germany
+          </div>
+          <div class="font-preview-meta">
+            <span class="font-preview-badge">Auto-Fit aktiv</span>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Font Preview Page",
+  "settings": [],
+  "presets": [
+    { "name": "Font Preview Page" }
+  ]
+}
+{% endschema %}
