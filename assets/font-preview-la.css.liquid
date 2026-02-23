@@ -1,0 +1,288 @@
+/* ============================================================
+   LaserArt Font Preview – CSS (Shopify safe)
+   Datei: assets/font-preview-la.css.liquid
+   ============================================================ */
+
+/* ============================================================
+   LASERART COLOR SYSTEM
+   ============================================================ */
+:root{
+  --la-bg-main: #F7F1E3;
+  --la-bg-card: #FFFFFF;
+  --la-bg-soft: #F0E6D2;
+  --la-accent: #5E7458;
+  --la-text: #000000;
+
+  --la-radius-lg: 22px;
+  --la-radius-md: 16px;
+}
+
+/* ============================================================
+   FULL PAGE BACKGROUND (nur für diese Section)
+   - löst dein "immer noch weiss" Problem, weil es fixed den Viewport färbt
+   ============================================================ */
+.la-font-preview{
+  position: relative;
+}
+.la-font-preview__bg{
+  position: fixed;
+  inset: 0;
+  background: var(--la-bg-main);
+  z-index: -1;
+}
+
+/* ----------------------------
+   FONT DEFINITIONS (01–39)
+   Dateinamen OHNE führende Null:
+   LaserArt_Schrift_1.woff2 ... LaserArt_Schrift_39.woff2
+   ---------------------------- */
+@font-face{
+  font-family:'LAG_Font_01';
+  src:
+    url('{{ "LaserArt_Schrift_01.woff2" | asset_url }}') format('woff2'),
+    url('{{ "LaserArt_Schrift_1.woff2"  | asset_url }}') format('woff2');
+  font-weight:400;font-style:normal;font-display:swap;
+}
+@font-face{
+  font-family:'LAG_Font_02';
+  src:
+    url('{{ "LaserArt_Schrift_02.woff2" | asset_url }}') format('woff2'),
+    url('{{ "LaserArt_Schrift_2.woff2"  | asset_url }}') format('woff2');
+  font-weight:400;font-style:normal;font-display:swap;
+}
+@font-face{
+  font-family:'LAG_Font_03';
+  src:
+    url('{{ "LaserArt_Schrift_03.woff2" | asset_url }}') format('woff2'),
+    url('{{ "LaserArt_Schrift_3.woff2"  | asset_url }}') format('woff2');
+  font-weight:400;font-style:normal;font-display:swap;
+}
+@font-face{
+  font-family:'LAG_Font_04';
+  src:
+    url('{{ "LaserArt_Schrift_04.woff2" | asset_url }}') format('woff2'),
+    url('{{ "LaserArt_Schrift_4.woff2"  | asset_url }}') format('woff2');
+  font-weight:400;font-style:normal;font-display:swap;
+}
+@font-face{
+  font-family:'LAG_Font_05';
+  src:
+    url('{{ "LaserArt_Schrift_05.woff2" | asset_url }}') format('woff2'),
+    url('{{ "LaserArt_Schrift_5.woff2"  | asset_url }}') format('woff2');
+  font-weight:400;font-style:normal;font-display:swap;
+}
+@font-face{
+  font-family:'LAG_Font_06';
+  src:
+    url('{{ "LaserArt_Schrift_06.woff2" | asset_url }}') format('woff2'),
+    url('{{ "LaserArt_Schrift_6.woff2"  | asset_url }}') format('woff2');
+  font-weight:400;font-style:normal;font-display:swap;
+}
+@font-face{
+  font-family:'LAG_Font_07';
+  src:
+    url('{{ "LaserArt_Schrift_07.woff2" | asset_url }}') format('woff2'),
+    url('{{ "LaserArt_Schrift_7.woff2"  | asset_url }}') format('woff2');
+  font-weight:400;font-style:normal;font-display:swap;
+}
+@font-face{
+  font-family:'LAG_Font_08';
+  src:
+    url('{{ "LaserArt_Schrift_08.woff2" | asset_url }}') format('woff2'),
+    url('{{ "LaserArt_Schrift_8.woff2"  | asset_url }}') format('woff2');
+  font-weight:400;font-style:normal;font-display:swap;
+}
+@font-face{
+  font-family:'LAG_Font_09';
+  src:
+    url('{{ "LaserArt_Schrift_09.woff2" | asset_url }}') format('woff2'),
+    url('{{ "LaserArt_Schrift_9.woff2"  | asset_url }}') format('woff2');
+  font-weight:400;font-style:normal;font-display:swap;
+}
+@font-face{font-family:'LAG_Font_10';src:url('{{ "LaserArt_Schrift_10.woff2" | asset_url }}') format('woff2');font-weight:400;font-style:normal;font-display:swap;}
+@font-face{font-family:'LAG_Font_11';src:url('{{ "LaserArt_Schrift_11.woff2" | asset_url }}') format('woff2');font-weight:400;font-style:normal;font-display:swap;}
+@font-face{font-family:'LAG_Font_12';src:url('{{ "LaserArt_Schrift_12.woff2" | asset_url }}') format('woff2');font-weight:400;font-style:normal;font-display:swap;}
+@font-face{font-family:'LAG_Font_13';src:url('{{ "LaserArt_Schrift_13.woff2" | asset_url }}') format('woff2');font-weight:400;font-style:normal;font-display:swap;}
+@font-face{font-family:'LAG_Font_14';src:url('{{ "LaserArt_Schrift_14.woff2" | asset_url }}') format('woff2');font-weight:400;font-style:normal;font-display:swap;}
+@font-face{font-family:'LAG_Font_15';src:url('{{ "LaserArt_Schrift_15.woff2" | asset_url }}') format('woff2');font-weight:400;font-style:normal;font-display:swap;}
+@font-face{font-family:'LAG_Font_16';src:url('{{ "LaserArt_Schrift_16.woff2" | asset_url }}') format('woff2');font-weight:400;font-style:normal;font-display:swap;}
+@font-face{font-family:'LAG_Font_17';src:url('{{ "LaserArt_Schrift_17.woff2" | asset_url }}') format('woff2');font-weight:400;font-style:normal;font-display:swap;}
+@font-face{font-family:'LAG_Font_18';src:url('{{ "LaserArt_Schrift_18.woff2" | asset_url }}') format('woff2');font-weight:400;font-style:normal;font-display:swap;}
+@font-face{font-family:'LAG_Font_19';src:url('{{ "LaserArt_Schrift_19.woff2" | asset_url }}') format('woff2');font-weight:400;font-style:normal;font-display:swap;}
+@font-face{font-family:'LAG_Font_20';src:url('{{ "LaserArt_Schrift_20.woff2" | asset_url }}') format('woff2');font-weight:400;font-style:normal;font-display:swap;}
+@font-face{font-family:'LAG_Font_21';src:url('{{ "LaserArt_Schrift_21.woff2" | asset_url }}') format('woff2');font-weight:400;font-style:normal;font-display:swap;}
+@font-face{font-family:'LAG_Font_22';src:url('{{ "LaserArt_Schrift_22.woff2" | asset_url }}') format('woff2');font-weight:400;font-style:normal;font-display:swap;}
+@font-face{font-family:'LAG_Font_23';src:url('{{ "LaserArt_Schrift_23.woff2" | asset_url }}') format('woff2');font-weight:400;font-style:normal;font-display:swap;}
+@font-face{font-family:'LAG_Font_24';src:url('{{ "LaserArt_Schrift_24.woff2" | asset_url }}') format('woff2');font-weight:400;font-style:normal;font-display:swap;}
+@font-face{font-family:'LAG_Font_25';src:url('{{ "LaserArt_Schrift_25.woff2" | asset_url }}') format('woff2');font-weight:400;font-style:normal;font-display:swap;}
+@font-face{font-family:'LAG_Font_26';src:url('{{ "LaserArt_Schrift_26.woff2" | asset_url }}') format('woff2');font-weight:400;font-style:normal;font-display:swap;}
+@font-face{font-family:'LAG_Font_27';src:url('{{ "LaserArt_Schrift_27.woff2" | asset_url }}') format('woff2');font-weight:400;font-style:normal;font-display:swap;}
+@font-face{font-family:'LAG_Font_28';src:url('{{ "LaserArt_Schrift_28.woff2" | asset_url }}') format('woff2');font-weight:400;font-style:normal;font-display:swap;}
+@font-face{font-family:'LAG_Font_29';src:url('{{ "LaserArt_Schrift_29.woff2" | asset_url }}') format('woff2');font-weight:400;font-style:normal;font-display:swap;}
+@font-face{font-family:'LAG_Font_30';src:url('{{ "LaserArt_Schrift_30.woff2" | asset_url }}') format('woff2');font-weight:400;font-style:normal;font-display:swap;}
+@font-face{font-family:'LAG_Font_31';src:url('{{ "LaserArt_Schrift_31.woff2" | asset_url }}') format('woff2');font-weight:400;font-style:normal;font-display:swap;}
+@font-face{font-family:'LAG_Font_32';src:url('{{ "LaserArt_Schrift_32.woff2" | asset_url }}') format('woff2');font-weight:400;font-style:normal;font-display:swap;}
+@font-face{font-family:'LAG_Font_33';src:url('{{ "LaserArt_Schrift_33.woff2" | asset_url }}') format('woff2');font-weight:400;font-style:normal;font-display:swap;}
+@font-face{font-family:'LAG_Font_34';src:url('{{ "LaserArt_Schrift_34.woff2" | asset_url }}') format('woff2');font-weight:400;font-style:normal;font-display:swap;}
+@font-face{font-family:'LAG_Font_35';src:url('{{ "LaserArt_Schrift_35.woff2" | asset_url }}') format('woff2');font-weight:400;font-style:normal;font-display:swap;}
+@font-face{font-family:'LAG_Font_36';src:url('{{ "LaserArt_Schrift_36.woff2" | asset_url }}') format('woff2');font-weight:400;font-style:normal;font-display:swap;}
+@font-face{font-family:'LAG_Font_37';src:url('{{ "LaserArt_Schrift_37.woff2" | asset_url }}') format('woff2');font-weight:400;font-style:normal;font-display:swap;}
+@font-face{font-family:'LAG_Font_38';src:url('{{ "LaserArt_Schrift_38.woff2" | asset_url }}') format('woff2');font-weight:400;font-style:normal;font-display:swap;}
+@font-face{font-family:'LAG_Font_39';src:url('{{ "LaserArt_Schrift_39.woff2" | asset_url }}') format('woff2');font-weight:400;font-style:normal;font-display:swap;}
+/* ----------------------------
+   LAYOUT / UI
+   ---------------------------- */
+.font-preview-wrap{
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 28px 18px 34px;
+  border-radius: 26px;
+  background: rgba(240,230,210,.55); /* F0E6D2 "soft" */
+  border: 1px solid rgba(94,116,88,.18);
+  box-shadow: 0 18px 60px rgba(0,0,0,.06);
+}
+
+.font-preview-head{
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.font-preview-title{
+  font-size: 28px;
+  font-weight: 700;
+  margin: 0;
+  letter-spacing: -0.02em;
+  color: var(--la-text);
+}
+
+.font-preview-input-wrap{display:flex;flex-direction:column;gap:8px}
+
+.font-preview-hint{
+  font-size: 12px;
+  color: rgba(0,0,0,.55);
+}
+
+.font-preview-input{
+  width: 100%;
+  padding: 14px 16px;
+  font-size: 18px;
+  border: 1px solid rgba(94,116,88,.35);
+  border-radius: 14px;
+  background: #fff;
+  color: var(--la-text);
+  transition: border-color .2s ease, box-shadow .2s ease;
+}
+
+.font-preview-input:focus{
+  outline: none;
+  border-color: var(--la-accent);
+  box-shadow: 0 0 0 3px rgba(94,116,88,.22);
+}
+
+.font-preview-grid{
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 14px;
+}
+
+.font-preview-card{
+  border: 1px solid rgba(94,116,88,.22);
+  border-radius: var(--la-radius-lg);
+  padding: 14px 14px 12px;
+  background: var(--la-bg-card);
+  box-shadow: 0 10px 26px rgba(0,0,0,.06);
+}
+
+.font-preview-name{
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--la-accent);
+  letter-spacing: .02em;
+  margin-bottom: 8px;
+}
+
+.font-preview-meta{margin-top:10px}
+.font-preview-badge{
+  display:inline-block;
+  font-size:11px;
+  padding:6px 10px;
+  border-radius:999px;
+  background: rgba(94,116,88,.10);
+  color: rgba(0,0,0,.72);
+  border: 1px solid rgba(94,116,88,.18);
+}
+
+/* ----------------------------
+   TEXT BOX (Auto-Fit Area)
+   - JS skaliert font-size runter, bis es passt
+   ---------------------------- */
+.font-preview-text{
+  color: var(--la-text);
+  white-space: pre-wrap;          /* erlaubt echte Zeilenumbrüche */
+  overflow-wrap: anywhere;
+  word-break: break-word;
+
+  display: flex;
+  align-items: center;
+  min-height: 120px;              /* Raum für 2 Zeilen */
+  padding: 6px 2px;
+
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  font-size: var(--base-size, 54px);
+  line-height: var(--base-line, 1.10);
+}
+
+/* ============================================================
+   FONT CLASSES + BASELINES
+   - 04 ist deine Referenz: daran orientiert
+   - Problemfälle (01/11/24/34) kleiner starten
+   ============================================================ */
+.font-01{font-family:'LAG_Font_1',sans-serif;--base-size:54px;--base-line:1.08;}
+.font-02{font-family:'LAG_Font_2',sans-serif;--base-size:56px;--base-line:1.08;}
+.font-03{font-family:'LAG_Font_3',sans-serif;--base-size:54px;--base-line:1.10;}
+.font-04{font-family:'LAG_Font_4',sans-serif;--base-size:50px;--base-line:1.16;} /* Referenz */
+.font-05{font-family:'LAG_Font_5',sans-serif;--base-size:52px;--base-line:1.10;}
+.font-06{font-family:'LAG_Font_6',sans-serif;--base-size:52px;--base-line:1.10;}
+.font-07{font-family:'LAG_Font_7',sans-serif;--base-size:52px;--base-line:1.10;}
+.font-08{font-family:'LAG_Font_8',sans-serif;--base-size:52px;--base-line:1.10;}
+.font-09{font-family:'LAG_Font_9',sans-serif;--base-size:50px;--base-line:1.12;}
+.font-10{font-family:'LAG_Font_10',sans-serif;--base-size:52px;--base-line:1.10;}
+.font-11{font-family:'LAG_Font_11',sans-serif;--base-size:46px;--base-line:1.12;} /* gross -> kleiner */
+.font-12{font-family:'LAG_Font_12',sans-serif;--base-size:50px;--base-line:1.14;}
+.font-13{font-family:'LAG_Font_13',sans-serif;--base-size:52px;--base-line:1.10;}
+.font-14{font-family:'LAG_Font_14',sans-serif;--base-size:44px;--base-line:1.20;} /* feine Script -> mehr line-height */
+.font-15{font-family:'LAG_Font_15',sans-serif;--base-size:46px;--base-line:1.18;}
+.font-16{font-family:'LAG_Font_16',sans-serif;--base-size:52px;--base-line:1.10;}
+.font-17{font-family:'LAG_Font_17',sans-serif;--base-size:52px;--base-line:1.10;}
+.font-18{font-family:'LAG_Font_18',sans-serif;--base-size:44px;--base-line:1.24;} /* eher "normal" */
+.font-19{font-family:'LAG_Font_19',sans-serif;--base-size:44px;--base-line:1.24;}
+.font-20{font-family:'LAG_Font_20',sans-serif;--base-size:44px;--base-line:1.24;}
+.font-21{font-family:'LAG_Font_21',sans-serif;--base-size:44px;--base-line:1.22;}
+.font-22{font-family:'LAG_Font_22',sans-serif;--base-size:44px;--base-line:1.26;} /* caps/serif-look */
+.font-23{font-family:'LAG_Font_23',sans-serif;--base-size:44px;--base-line:1.18;}
+.font-24{font-family:'LAG_Font_24',sans-serif;--base-size:46px;--base-line:1.12;} /* zu gross -> kleiner */
+.font-25{font-family:'LAG_Font_25',sans-serif;--base-size:48px;--base-line:1.12;}
+.font-26{font-family:'LAG_Font_26',sans-serif;--base-size:44px;--base-line:1.22;}
+.font-27{font-family:'LAG_Font_27',sans-serif;--base-size:44px;--base-line:1.18;}
+.font-28{font-family:'LAG_Font_28',sans-serif;--base-size:52px;--base-line:1.08;}
+.font-29{font-family:'LAG_Font_29',sans-serif;--base-size:44px;--base-line:1.18;}
+.font-30{font-family:'LAG_Font_30',sans-serif;--base-size:52px;--base-line:1.06;}
+.font-31{font-family:'LAG_Font_31',sans-serif;--base-size:52px;--base-line:1.08;}
+.font-32{font-family:'LAG_Font_32',sans-serif;--base-size:44px;--base-line:1.18;}
+.font-33{font-family:'LAG_Font_33',sans-serif;--base-size:44px;--base-line:1.20;}
+.font-34{font-family:'LAG_Font_34',sans-serif;--base-size:38px;--base-line:1.16;} /* Katastrophe -> massiv kleiner */
+.font-35{font-family:'LAG_Font_35',sans-serif;--base-size:42px;--base-line:1.22;}
+.font-36{font-family:'LAG_Font_36',sans-serif;--base-size:42px;--base-line:1.24;}
+.font-37{font-family:'LAG_Font_37',sans-serif;--base-size:48px;--base-line:1.12;}
+.font-38{font-family:'LAG_Font_38',sans-serif;--base-size:40px;--base-line:1.26;}
+.font-39{font-family:'LAG_Font_39',sans-serif;--base-size:44px;--base-line:1.22;}
+
+/* Mobile */
+@media (max-width: 640px){
+  .font-preview-wrap{padding:22px 14px}
+  .font-preview-text{min-height:108px}
+}
