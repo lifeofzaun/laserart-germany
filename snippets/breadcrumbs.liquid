@@ -1,0 +1,149 @@
+{%- if template.name == 'index' -%}
+  {%- comment -%} Keine Breadcrumbs auf der Startseite {%- endcomment -%}
+{%- else -%}
+  {%- liquid
+    assign home_label = 'LaserArt Germany'
+  -%}
+
+  <nav class="la-breadcrumbs" aria-label="Breadcrumb">
+    <div class="la-breadcrumbs__inner">
+      <ol class="la-breadcrumbs__list">
+        <li class="la-breadcrumbs__item">
+          <a class="la-breadcrumbs__link" href="{{ routes.root_url }}">{{ home_label }}</a>
+        </li>
+
+        {%- if template.name == 'collection' and collection -%}
+          <li class="la-breadcrumbs__sep" aria-hidden="true">›</li>
+          <li class="la-breadcrumbs__item" aria-current="page">
+            <span class="la-breadcrumbs__current">{{ collection.title }}</span>
+          </li>
+
+        {%- elsif template.name == 'product' and product -%}
+          {%- assign bc_collection = product.collections.first -%}
+          {%- if bc_collection -%}
+            <li class="la-breadcrumbs__sep" aria-hidden="true">›</li>
+            <li class="la-breadcrumbs__item">
+              <a class="la-breadcrumbs__link" href="{{ bc_collection.url }}">{{ bc_collection.title }}</a>
+            </li>
+          {%- endif -%}
+
+          <li class="la-breadcrumbs__sep" aria-hidden="true">›</li>
+          <li class="la-breadcrumbs__item" aria-current="page">
+            <span class="la-breadcrumbs__current">{{ product.title }}</span>
+          </li>
+
+        {%- elsif template.name == 'page' and page -%}
+          <li class="la-breadcrumbs__sep" aria-hidden="true">›</li>
+          <li class="la-breadcrumbs__item" aria-current="page">
+            <span class="la-breadcrumbs__current">{{ page.title }}</span>
+          </li>
+
+        {%- elsif template.name == 'blog' and blog -%}
+          <li class="la-breadcrumbs__sep" aria-hidden="true">›</li>
+          <li class="la-breadcrumbs__item" aria-current="page">
+            <span class="la-breadcrumbs__current">{{ blog.title }}</span>
+          </li>
+
+        {%- elsif template.name == 'article' and article and blog -%}
+          <li class="la-breadcrumbs__sep" aria-hidden="true">›</li>
+          <li class="la-breadcrumbs__item">
+            <a class="la-breadcrumbs__link" href="{{ blog.url }}">{{ blog.title }}</a>
+          </li>
+
+          <li class="la-breadcrumbs__sep" aria-hidden="true">›</li>
+          <li class="la-breadcrumbs__item" aria-current="page">
+            <span class="la-breadcrumbs__current">{{ article.title }}</span>
+          </li>
+
+        {%- elsif template.name == 'search' -%}
+          <li class="la-breadcrumbs__sep" aria-hidden="true">›</li>
+          <li class="la-breadcrumbs__item" aria-current="page">
+            <span class="la-breadcrumbs__current">Suche</span>
+          </li>
+
+        {%- elsif template.name == 'cart' -%}
+          <li class="la-breadcrumbs__sep" aria-hidden="true">›</li>
+          <li class="la-breadcrumbs__item" aria-current="page">
+            <span class="la-breadcrumbs__current">Warenkorb</span>
+          </li>
+
+        {%- else -%}
+          <li class="la-breadcrumbs__sep" aria-hidden="true">›</li>
+          <li class="la-breadcrumbs__item" aria-current="page">
+            <span class="la-breadcrumbs__current">{{ page_title }}</span>
+          </li>
+        {%- endif -%}
+      </ol>
+    </div>
+  </nav>
+
+  <style>
+    .la-breadcrumbs{
+      background: #F7F1E3;
+      margin: 0;
+      padding: 12px 0;
+    }
+
+    /* Eigener, stabiler Container: nie mehr "ganz links" */
+    .la-breadcrumbs__inner{
+      width: 100%;
+      max-width: 1400px;
+      margin-left: auto !important;
+      margin-right: auto !important;
+      padding-left: clamp(14px, 2.5vw, 28px) !important;
+      padding-right: clamp(14px, 2.5vw, 28px) !important;
+      box-sizing: border-box;
+    }
+
+    .la-breadcrumbs__list{
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px;
+      font-size: 12px;
+      line-height: 1.4;
+      letter-spacing: 0.01em;
+    }
+
+    .la-breadcrumbs__item{
+      display: inline-flex;
+      align-items: center;
+      white-space: nowrap;
+    }
+
+    .la-breadcrumbs__link{
+      text-decoration: none;
+      color: inherit;
+      opacity: 0.65;
+      transition: opacity .15s ease;
+    }
+    .la-breadcrumbs__link:hover{
+      opacity: 1;
+      text-decoration: underline;
+    }
+
+    .la-breadcrumbs__sep{
+      opacity: 0.35;
+      transform: translateY(-0.5px);
+      user-select: none;
+    }
+
+    .la-breadcrumbs__current{
+      opacity: 0.9;
+      font-weight: 500;
+    }
+
+    @media (max-width: 768px){
+      .la-breadcrumbs{
+        padding: 10px 0;
+      }
+      .la-breadcrumbs__list{
+        gap: 8px;
+        font-size: 11px;
+      }
+    }
+  </style>
+{%- endif -%}
