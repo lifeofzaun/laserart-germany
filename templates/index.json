@@ -206,7 +206,7 @@
           "settings": {
             "bubble_img": "shopify://shop_images/menu_geburtsschild-aus-holz-personalisiert-3d-monogramm-mit-rose-daten-zur-geburt-6694348.webp",
             "bubble_text": "Geburt/Taufe",
-            "bubble_link": "shopify://collections/geburt-taufe"
+            "bubble_link": "shopify://collections/geschenke-zur-geburt"
           }
         },
         "image_WTLrkx": {
@@ -238,7 +238,7 @@
           "settings": {
             "bubble_img": "shopify://shop_images/menu_taufkreuz-personalisiert-aus-holz-symbol-des-glaubens-erinnerung-6548441.webp",
             "bubble_text": "Taufkreuz",
-            "bubble_link": "shopify://collections/taufkreuze"
+            "bubble_link": "shopify://collections/taufkreuz-personalisiert"
           }
         }
       },
@@ -872,7 +872,7 @@
       },
       "name": "t:names.products_editorial",
       "settings": {
-        "collection": "namensschilder",
+        "collection": "kinderzimmer-namensschilder",
         "layout_type": "carousel",
         "carousel_on_mobile": true,
         "max_products": 8,
@@ -1036,7 +1036,7 @@
       "settings": {
         "collection_list": [
           "geldgeschenk",
-          "geburt-taufe",
+          "geschenke-zur-geburt",
           "hochzeitsgeschenke",
           "familienschilder",
           "baby-rasseln",
