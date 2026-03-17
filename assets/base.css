@@ -4959,6 +4959,94 @@ body .shopify-policy__container {
   padding-inline: min(3.2vw, 30px);
 }
 
+body :is(.la-about-page, .la-contact-page, .la-legal-page) {
+  --la-premium-surface:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.94), rgba(250, 245, 238, 0.9)),
+    linear-gradient(180deg, rgba(93, 115, 88, 0.08), rgba(183, 122, 81, 0.08));
+  --la-premium-border: 1px solid rgba(255, 255, 255, 0.58);
+  --la-premium-shadow: 0 18px 50px rgba(36, 31, 26, 0.08);
+  --la-premium-radius-xl: 32px;
+  --la-premium-radius-lg: 24px;
+  --la-premium-radius-md: 18px;
+}
+
+body :is(.la-about-shell, .la-contact-shell, .la-legal-shell) {
+  gap: 28px;
+}
+
+body :is(.la-about-hero, .la-contact-hero, .la-legal-hero, .shopify-policy__container),
+body :is(.la-about-story-card, .la-about-home-card, .la-about-trust-card, .la-about-cta-card, .la-contact-card, .la-contact-panel-card, .la-contact-close-card, .la-contact-home-card, .la-legal-card) {
+  border-radius: var(--la-premium-radius-xl);
+  border: var(--la-premium-border);
+  background: var(--la-premium-surface);
+  box-shadow: var(--la-premium-shadow);
+}
+
+body :is(.la-about-hero, .la-contact-hero, .la-legal-hero) {
+  padding: clamp(28px, 3.2vw, 40px);
+}
+
+body :is(.la-about-story-card, .la-about-home-card, .la-about-trust-card, .la-about-cta-card, .la-contact-card, .la-contact-panel-card, .la-contact-close-card, .la-contact-home-card, .la-legal-card),
+body .shopify-policy__container {
+  padding: clamp(24px, 2.6vw, 34px);
+}
+
+body :is(.la-about-topbar, .la-contact-topbar, .la-legal-topbar) {
+  gap: 14px;
+  margin-bottom: 28px;
+}
+
+body :is(.la-about-badge-row, .la-contact-badge-row, .la-legal-badges, .la-about-actions, .la-contact-actions, .la-legal-actions, .la-about-chip-row, .la-contact-chip-row) {
+  gap: 12px;
+}
+
+body :is(.la-about-title, .la-contact-title, .la-legal-title),
+body .shopify-policy__title h1 {
+  margin: 0;
+  max-width: 14ch;
+  font-size: clamp(2.4rem, 4.4vw, 4.4rem);
+  line-height: 0.94;
+  letter-spacing: -0.04em;
+  text-wrap: balance;
+}
+
+body :is(.la-about-lead, .la-contact-lead, .la-legal-lead),
+body .shopify-policy__container .rte > :is(p, ul, ol):first-child {
+  max-width: 70ch;
+  font-size: clamp(1.02rem, 1.25vw, 1.16rem);
+  line-height: 1.72;
+  color: rgb(var(--color-foreground-rgb) / 0.78);
+}
+
+body :is(.la-about-grid, .la-contact-grid, .la-legal-grid, .la-about-story-grid, .la-about-home-grid, .la-about-process-grid, .la-about-trust-grid, .la-contact-two-col, .la-contact-home-grid, .la-contact-close-grid) {
+  gap: clamp(18px, 2vw, 26px);
+}
+
+body :is(.la-about-section-title, .la-contact-section-title, .la-legal-versand-title, .la-legal-agbs-title, .la-legal-impressum-title),
+body .shopify-policy__container .rte h2 {
+  font-size: clamp(1.35rem, 2.1vw, 1.9rem);
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+}
+
+body :is(.la-about-section-text, .la-contact-section-text, .la-legal-content),
+body .shopify-policy__container .rte {
+  max-width: 72ch;
+  line-height: 1.72;
+}
+
+body .shopify-policy__container {
+  margin-top: 16px;
+}
+
+body .shopify-policy__title {
+  margin-bottom: 22px;
+}
+
+body .shopify-policy__container .rte :is(h2, h3, h4) {
+  margin-top: 2.2rem;
+}
+
 @media screen and (max-width: 720px) {
   body .la-about-page .la-about-shell,
   body .la-contact-page .la-contact-shell,
@@ -4970,5 +5058,22 @@ body .shopify-policy__container {
   body .la-about-page .la-about-shell,
   body .shopify-policy__container {
     padding-inline: 14px;
+  }
+
+  body :is(.la-about-shell, .la-contact-shell, .la-legal-shell) {
+    gap: 20px;
+  }
+
+  body :is(.la-about-hero, .la-contact-hero, .la-legal-hero),
+  body :is(.la-about-story-card, .la-about-home-card, .la-about-trust-card, .la-about-cta-card, .la-contact-card, .la-contact-panel-card, .la-contact-close-card, .la-contact-home-card, .la-legal-card),
+  body .shopify-policy__container {
+    border-radius: 24px;
+    padding: 20px 18px;
+  }
+
+  body :is(.la-about-title, .la-contact-title, .la-legal-title),
+  body .shopify-policy__title h1 {
+    max-width: none;
+    font-size: clamp(2rem, 9vw, 3rem);
   }
 }
