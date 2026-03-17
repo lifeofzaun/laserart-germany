@@ -214,7 +214,7 @@
           "settings": {
             "bubble_img": "shopify://shop_images/menu_platzkarten-namensschilder-hochzeit-aus-holz-fur-individuelle-feste-4539481.webp",
             "bubble_text": "Hochzeit",
-            "bubble_link": "shopify://collections/hochzeit-tischdeko-platzkarten"
+            "bubble_link": "shopify://collections/hochzeit-tischdeko-und-platzkarten"
           }
         },
         "image_xkLUVX": {
@@ -872,7 +872,7 @@
       },
       "name": "t:names.products_editorial",
       "settings": {
-        "collection": "namensschilder-kinderzimmer",
+        "collection": "namensschild-kinderzimmer",
         "layout_type": "carousel",
         "carousel_on_mobile": true,
         "max_products": 8,
