@@ -4944,3 +4944,27 @@ product-recommendations:has([data-has-recommendations='false']) {
     translate: 0px var(--atc-destination, 0px);
   }
 }
+
+/* LaserArt staging static page harmonization */
+body .la-about-page .la-about-shell,
+body .la-contact-page .la-contact-shell,
+body .la-legal-page .la-legal-shell {
+  max-width: 1180px;
+  margin-inline: auto;
+}
+
+body .la-about-page .la-about-shell {
+  padding-inline: min(3.2vw, 30px);
+}
+
+@media screen and (max-width: 720px) {
+  body .la-about-page .la-about-shell,
+  body .la-contact-page .la-contact-shell,
+  body .la-legal-page .la-legal-shell {
+    max-width: none;
+  }
+
+  body .la-about-page .la-about-shell {
+    padding-inline: 14px;
+  }
+}
