@@ -5043,6 +5043,138 @@ body .shopify-policy__container .rte {
   line-height: 1.72;
 }
 
+body :is(.la-about-badge, .la-contact-badge, .la-legal-badge),
+body :is(.la-about-chip, .la-contact-chip, .la-legal-chip) {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 36px;
+  padding: 10px 16px;
+  border-radius: 999px;
+  border: 1px solid rgb(var(--color-foreground-rgb) / 0.1);
+  background: rgb(255 255 255 / 0.66);
+  color: rgb(var(--color-foreground-rgb) / 0.78);
+  backdrop-filter: blur(8px);
+}
+
+body :is(.la-about-button, .la-contact-button),
+body .shopify-policy__container a:not(.button) {
+  transition:
+    transform 180ms ease,
+    box-shadow 180ms ease,
+    background-color 180ms ease,
+    color 180ms ease,
+    border-color 180ms ease;
+}
+
+body :is(.la-about-button--primary, .la-contact-button--primary) {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 50px;
+  padding: 14px 22px;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  background: linear-gradient(135deg, #5d7358, #42563f);
+  color: #fff;
+  box-shadow: 0 16px 30px rgb(66 86 63 / 0.22);
+}
+
+body :is(.la-about-button--ghost, .la-contact-button--ghost) {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 50px;
+  padding: 14px 22px;
+  border-radius: 999px;
+  border: 1px solid rgb(var(--color-foreground-rgb) / 0.14);
+  background: rgb(255 255 255 / 0.7);
+  color: rgb(var(--color-foreground-rgb) / 0.86);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  body :is(.la-about-button--primary, .la-contact-button--primary):hover,
+  body :is(.la-about-button--ghost, .la-contact-button--ghost):hover,
+  body .shopify-policy__container a:not(.button):hover {
+    transform: translateY(-1px);
+  }
+
+  body :is(.la-about-button--primary, .la-contact-button--primary):hover {
+    box-shadow: 0 18px 36px rgb(66 86 63 / 0.28);
+  }
+}
+
+body :is(.la-about-link, .la-contact-link),
+body .shopify-policy__container a:not(.button) {
+  color: #42563f;
+  text-decoration: none;
+  border-bottom: 1px solid rgb(66 86 63 / 0.18);
+}
+
+body :is(.la-about-link, .la-contact-link):hover,
+body .shopify-policy__container a:not(.button):hover {
+  border-bottom-color: rgb(66 86 63 / 0.42);
+}
+
+body :is(.la-about-note, .la-contact-note, .la-contact-form-note, .la-legal-note, .la-legal-disclaimer) {
+  padding: 16px 18px;
+  border-radius: var(--la-premium-radius-md);
+  border: 1px solid rgb(183 122 81 / 0.16);
+  background: linear-gradient(135deg, rgb(255 250 245 / 0.95), rgb(250 245 238 / 0.82));
+  color: rgb(var(--color-foreground-rgb) / 0.78);
+}
+
+body :is(.la-about-proof-item, .la-contact-proof-item) {
+  padding: 18px 20px;
+  border-radius: var(--la-premium-radius-md);
+  border: 1px solid rgb(var(--color-foreground-rgb) / 0.08);
+  background: rgb(255 255 255 / 0.56);
+}
+
+body :is(.la-about-faq-item, .la-contact-faq-item) {
+  padding: 20px 22px;
+  border-radius: var(--la-premium-radius-lg);
+  border: 1px solid rgb(var(--color-foreground-rgb) / 0.08);
+  background: rgb(255 255 255 / 0.6);
+  box-shadow: 0 10px 24px rgb(36 31 26 / 0.05);
+}
+
+body :is(.la-about-faq-answer, .la-contact-faq-answer),
+body :is(.la-legal-content, .la-legal-versand-content, .la-legal-agbs-content, .la-legal-impressum-content),
+body .shopify-policy__container .rte :is(p, li) {
+  color: rgb(var(--color-foreground-rgb) / 0.8);
+}
+
+body :is(.la-contact-list, .la-legal-content ul, .la-legal-content ol),
+body .shopify-policy__container .rte :is(ul, ol) {
+  display: grid;
+  gap: 10px;
+  padding-left: 1.2rem;
+}
+
+body :is(.la-about-section-kicker, .la-contact-kicker, .la-contact-eyebrow, .la-legal-eyebrow) {
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-size: 0.78rem;
+  color: #6d6359;
+}
+
+body :is(.la-contact-section-title, .la-contact-faq-title, .la-contact-help-title, .la-contact-fast-title, .la-contact-home-title, .la-contact-close-title),
+body :is(.la-about-section-title, .la-legal-versand-title, .la-legal-agbs-title, .la-legal-impressum-title),
+body .shopify-policy__container .rte h3 {
+  margin: 0 0 12px;
+}
+
+body :is(.la-contact-section-text, .la-about-section-text, .la-legal-content) > :first-child,
+body .shopify-policy__container .rte > :first-child {
+  margin-top: 0;
+}
+
+body :is(.la-contact-section-text, .la-about-section-text, .la-legal-content) > :last-child,
+body .shopify-policy__container .rte > :last-child {
+  margin-bottom: 0;
+}
+
 body .shopify-policy__container {
   width: min(1180px, calc(100vw - clamp(28px, 6vw, 60px)));
   max-width: none;
@@ -5081,6 +5213,12 @@ body .shopify-policy__container .rte :is(h2, h3, h4) {
 
   body :is(.la-about-shell, .la-contact-shell, .la-legal-shell) {
     gap: 20px;
+  }
+
+  body :is(.la-about-badge, .la-contact-badge, .la-legal-badge),
+  body :is(.la-about-chip, .la-contact-chip, .la-legal-chip) {
+    min-height: 34px;
+    padding: 8px 14px;
   }
 
   body :is(.la-about-hero, .la-contact-hero, .la-legal-hero),
