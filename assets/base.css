@@ -4954,6 +4954,14 @@ body .shopify-policy__container {
   margin-inline: auto;
 }
 
+body :is(.la-contact-page, .la-legal-page) {
+  width: 100vw;
+  position: relative;
+  left: 50%;
+  margin-left: -50vw;
+  overflow: clip;
+}
+
 body .la-about-page .la-about-shell,
 body .shopify-policy__container {
   padding-inline: min(3.2vw, 30px);
@@ -5036,6 +5044,12 @@ body .shopify-policy__container .rte {
 }
 
 body .shopify-policy__container {
+  width: min(1180px, calc(100vw - clamp(28px, 6vw, 60px)));
+  max-width: none;
+  margin-inline: 0;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
   margin-top: 16px;
 }
 
@@ -5060,6 +5074,11 @@ body .shopify-policy__container .rte :is(h2, h3, h4) {
     padding-inline: 14px;
   }
 
+  body :is(.la-contact-page, .la-legal-page) {
+    left: 50%;
+    margin-left: -50vw;
+  }
+
   body :is(.la-about-shell, .la-contact-shell, .la-legal-shell) {
     gap: 20px;
   }
@@ -5075,5 +5094,9 @@ body .shopify-policy__container .rte :is(h2, h3, h4) {
   body .shopify-policy__title h1 {
     max-width: none;
     font-size: clamp(2rem, 9vw, 3rem);
+  }
+
+  body .shopify-policy__container {
+    width: calc(100vw - 28px);
   }
 }
