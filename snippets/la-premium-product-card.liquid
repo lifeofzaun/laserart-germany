@@ -1,0 +1,43 @@
+{%- liquid
+  assign resolved_product = product
+  if resolved_product == blank and product_handle != blank
+    assign resolved_product = all_products[product_handle]
+  endif
+-%}
+
+{% if resolved_product != blank %}
+  <a class="la-premium-card la-premium-card--product" href="{{ resolved_product.url }}">
+    <div class="la-premium-card__media">
+      {% if resolved_product.featured_image != blank %}
+        {{
+          resolved_product.featured_image
+          | image_url: width: 720
+          | image_tag:
+            loading: 'lazy',
+            widths: '320, 480, 640, 720',
+            sizes: '(min-width: 990px) 280px, 42vw',
+            alt: resolved_product.featured_image.alt | default: resolved_product.title,
+            class: 'la-premium-card__image'
+        }}
+      {% endif %}
+      {% if badge != blank %}
+        <span class="la-premium-card__badge">{{ badge }}</span>
+      {% endif %}
+    </div>
+    <div class="la-premium-card__body">
+      <p class="la-premium-card__eyebrow">{{ eyebrow | default: 'Kuratiertes Highlight' }}</p>
+      <h3 class="la-premium-card__title">{{ resolved_product.title }}</h3>
+      {% if description != blank %}
+        <p class="la-premium-card__copy">{{ description }}</p>
+      {% endif %}
+      <div class="la-premium-card__meta">
+        {% if resolved_product.price_varies %}
+          <span>{{ 'products.product.from_text_html' | t: price: resolved_product.price_min | money }}</span>
+        {% else %}
+          <span>{{ resolved_product.price | money }}</span>
+        {% endif %}
+        <span class="la-premium-card__cta">{{ cta | default: 'Jetzt entdecken' }}</span>
+      </div>
+    </div>
+  </a>
+{% endif %}

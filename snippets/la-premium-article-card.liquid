@@ -1,0 +1,32 @@
+{% if article != blank %}
+  <a class="la-premium-card la-premium-card--article" href="{{ article.url }}">
+    <div class="la-premium-card__media">
+      {% if article.image != blank %}
+        {{
+          article.image
+          | image_url: width: 720
+          | image_tag:
+            loading: 'lazy',
+            widths: '320, 480, 640, 720',
+            sizes: '(min-width: 990px) 280px, 42vw',
+            alt: article.image.alt | default: article.title,
+            class: 'la-premium-card__image'
+        }}
+      {% endif %}
+      {% if badge != blank %}
+        <span class="la-premium-card__badge">{{ badge }}</span>
+      {% endif %}
+    </div>
+    <div class="la-premium-card__body">
+      <p class="la-premium-card__eyebrow">{{ eyebrow | default: 'Aus dem Blog' }}</p>
+      <h3 class="la-premium-card__title">{{ article.title }}</h3>
+      {% if description != blank %}
+        <p class="la-premium-card__copy">{{ description }}</p>
+      {% endif %}
+      <div class="la-premium-card__meta">
+        <span>{{ article.published_at | date: '%d.%m.%Y' }}</span>
+        <span class="la-premium-card__cta">{{ cta | default: 'Mehr lesen' }}</span>
+      </div>
+    </div>
+  </a>
+{% endif %}
