@@ -4948,23 +4948,27 @@ product-recommendations:has([data-has-recommendations='false']) {
 /* LaserArt staging static page harmonization */
 body .la-about-page .la-about-shell,
 body .la-contact-page .la-contact-shell,
-body .la-legal-page .la-legal-shell {
+body .la-legal-page .la-legal-shell,
+body .shopify-policy__container {
   max-width: 1180px;
   margin-inline: auto;
 }
 
-body .la-about-page .la-about-shell {
+body .la-about-page .la-about-shell,
+body .shopify-policy__container {
   padding-inline: min(3.2vw, 30px);
 }
 
 @media screen and (max-width: 720px) {
   body .la-about-page .la-about-shell,
   body .la-contact-page .la-contact-shell,
-  body .la-legal-page .la-legal-shell {
+  body .la-legal-page .la-legal-shell,
+  body .shopify-policy__container {
     max-width: none;
   }
 
-  body .la-about-page .la-about-shell {
+  body .la-about-page .la-about-shell,
+  body .shopify-policy__container {
     padding-inline: 14px;
   }
 }
