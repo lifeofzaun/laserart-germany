@@ -1,0 +1,359 @@
+{% capture utility_links %}
+  <a href="/pages/reviews">Kundenbewertungen</a>
+  <a href="/pages/versand">Versand</a>
+  <a href="/pages/kontakt">Kontakt</a>
+  <a href="/pages/faq-du-fragst-wir-antworten">FAQ</a>
+{% endcapture %}
+
+{% case menu_key %}
+  {% when 'hochzeit' %}
+    {% if mobile %}
+      <div class="la-premium-mobile-panel__lead">
+        <p class="la-premium-panel__eyebrow">Für große Momente</p>
+        <p class="la-premium-panel__intro-copy">Elegante Geschenke und Tischdetails für Hochzeiten mit Handschrift statt Standard.</p>
+      </div>
+      <div class="la-premium-mobile-panel__links">
+        <a href="/collections/hochzeitsgeschenke-personalisiert">Hochzeitsgeschenke</a>
+        <a href="/collections/hochzeit-tischdeko-und-platzkarten">Tischdeko & Platzkarten</a>
+        <a href="/collections/silberhochzeit-geschenke">Silberhochzeit Geschenke</a>
+        <a href="/collections/geschenke-fuer-paare">Geschenke für Paare</a>
+      </div>
+      <div class="la-premium-mobile-panel__featured">
+        {% render 'la-premium-product-card', product_handle: 'ewige-rose-aus-holz-personalisiertes-geschenk', badge: 'Bestseller', eyebrow: 'Hero Produkt', description: 'Ein emotionales Geschenk mit sofortigem Premium-Charakter.' %}
+      </div>
+    {% else %}
+      <div class="la-premium-panel__intro">
+        <p class="la-premium-panel__eyebrow">Für große Momente</p>
+        <h3 class="la-premium-panel__title">Hochzeit mit Charakter</h3>
+        <p class="la-premium-panel__intro-copy">Von emotionalen Geschenkideen bis zu stilvoller Papeterie aus Holz und Acryl: alles für einen Auftritt, der hochwertig und persönlich wirkt.</p>
+        <a class="la-premium-panel__primary-link" href="/pages/hochzeit">Zur Hochzeitswelt</a>
+      </div>
+      <div class="la-premium-panel__links">
+        <div class="la-premium-panel__group">
+          <p class="la-premium-panel__group-title">Direkt starten</p>
+          <a href="/collections/hochzeitsgeschenke-personalisiert">Hochzeitsgeschenke</a>
+          <a href="/collections/hochzeit-tischdeko-und-platzkarten">Tischdeko & Platzkarten</a>
+          <a href="/collections/silberhochzeit-geschenke">Silberhochzeit Geschenke</a>
+          <a href="/collections/geschenke-fuer-paare">Geschenke für Paare</a>
+        </div>
+        <div class="la-premium-panel__group">
+          <p class="la-premium-panel__group-title">Schnelle Wege</p>
+          <a href="/blogs/news/personalisierte-platzkarten-aus-holz-stilvolle-tischdekoration-fur-hochzeiten-taufen-besondere-anlasse">Ideen für die Hochzeitstafel</a>
+          <a href="/pages/reviews">Was Kunden bestellen</a>
+          <a href="/collections/personalisierte-holzgeschenke">Alle personalisierten Geschenke</a>
+        </div>
+      </div>
+      <div class="la-premium-panel__featured">
+        {% render 'la-premium-product-card', product_handle: 'ewige-rose-aus-holz-personalisiertes-geschenk', badge: 'Bestseller', eyebrow: 'Hero Produkt', description: 'Emotional, schnell verständlich und perfekt für die erste Conversion.' %}
+        {% render 'la-premium-product-card', product_handle: 'namensschilder-aus-holz-personalisierte-platzkarten-zur-hochzeit', badge: 'Auf der Tafel stark', eyebrow: 'Direkt kaufen', description: 'Zeigt sofort, dass LaserArt mehr kann als Standard-Geschenke.' %}
+      </div>
+      <div class="la-premium-panel__footer">{{ utility_links }}</div>
+    {% endif %}
+
+  {% when 'taufe-geburt' %}
+    {% if mobile %}
+      <div class="la-premium-mobile-panel__lead">
+        <p class="la-premium-panel__eyebrow">Erinnerungsstücke fürs Leben</p>
+        <p class="la-premium-panel__intro-copy">Geschenke zur Taufe und Geburt, die warm, persönlich und sichtbar besonders wirken.</p>
+      </div>
+      <div class="la-premium-mobile-panel__links">
+        <a href="/collections/taufgeschenke-personalisiert">Taufgeschenke</a>
+        <a href="/collections/taufkreuz-personalisiert">Taufkreuz Personalisiert</a>
+        <a href="/collections/geschenke-zur-geburt">Geschenke zur Geburt</a>
+        <a href="/collections/nachtlicht-personalisiert">Nachtlicht Personalisiert</a>
+        <a href="/collections/patengeschenke-personalisiert">Patengeschenke</a>
+      </div>
+      <div class="la-premium-mobile-panel__featured">
+        {% render 'la-premium-product-card', product_handle: 'personalisiertes-taufkreuz-aus-holz-mit-acryl-name', badge: 'Sehr beliebt', eyebrow: 'Hero Produkt', description: 'Hohe Relevanz und eine klare Suchintention in einem Produkt.' %}
+      </div>
+    {% else %}
+      <div class="la-premium-panel__intro">
+        <p class="la-premium-panel__eyebrow">Erinnerungsstücke fürs Leben</p>
+        <h3 class="la-premium-panel__title">Taufe & Geburt liebevoll kuratiert</h3>
+        <p class="la-premium-panel__intro-copy">Produkte, die sofort emotional lesbar sind und dabei hochwertig genug wirken, um als echtes Erinnerungsstück zu bestehen.</p>
+        <a class="la-premium-panel__primary-link" href="/pages/taufe-und-geburt">Zur Geburts- & Taufwelt</a>
+      </div>
+      <div class="la-premium-panel__links">
+        <div class="la-premium-panel__group">
+          <p class="la-premium-panel__group-title">Beliebte Einstiege</p>
+          <a href="/collections/taufgeschenke-personalisiert">Taufgeschenke</a>
+          <a href="/collections/taufkreuz-personalisiert">Taufkreuz Personalisiert</a>
+          <a href="/collections/geschenke-zur-geburt">Geschenke zur Geburt</a>
+          <a href="/collections/nachtlicht-personalisiert">Nachtlicht Personalisiert</a>
+          <a href="/collections/patengeschenke-personalisiert">Patengeschenke</a>
+        </div>
+        <div class="la-premium-panel__group">
+          <p class="la-premium-panel__group-title">Inspiration</p>
+          <a href="/blogs/news/der-ultimative-guide-zu-personalisierten-taufkreuzen-bedeutung-ideen-inspiration">Taufkreuz-Guide lesen</a>
+          <a href="/pages/reviews">Kundenstimmen ansehen</a>
+          <a href="/collections/personalisierte-holzgeschenke">Alle Geschenkideen ansehen</a>
+        </div>
+      </div>
+      <div class="la-premium-panel__featured">
+        {% render 'la-premium-product-card', product_handle: 'personalisiertes-taufkreuz-aus-holz-mit-acryl-name', badge: 'Sehr beliebt', eyebrow: 'Hero Produkt', description: 'Ein sofort verständliches Premium-Produkt mit starker Suchabsicht.' %}
+        {% render 'la-premium-product-card', product_handle: 'personalisiertes-schlummerlicht-aus-holz-mond-design', badge: 'Sanfte Geschenkidee', eyebrow: 'Schneller Einstieg', description: 'Ideal für Nutzer, die eher über Produktwelt als über Anlass denken.' %}
+      </div>
+      <div class="la-premium-panel__footer">{{ utility_links }}</div>
+    {% endif %}
+
+  {% when 'geldgeschenke' %}
+    {% if mobile %}
+      <div class="la-premium-mobile-panel__lead">
+        <p class="la-premium-panel__eyebrow">Schenken mit Aha-Effekt</p>
+        <p class="la-premium-panel__intro-copy">Kreative Geldgeschenke, die nicht nach Umschlag, sondern nach echter Idee aussehen.</p>
+      </div>
+      <div class="la-premium-mobile-panel__links">
+        <a href="/collections/geldgeschenke">Alle Geldgeschenke</a>
+        <a href="/collections/geldgeschenk-geburtstag">Geldgeschenk Geburtstag</a>
+        <a href="/pages/geldgeschenke-ideen">Zur Ideenwelt</a>
+      </div>
+      <div class="la-premium-mobile-panel__featured">
+        {% render 'la-premium-product-card', product_handle: 'geldgeschenk-zur-hochzeit-aus-holz-personalisiertes-hochzeitsauto', badge: 'Starker Hingucker', eyebrow: 'Hero Produkt', description: 'Perfekt für Nutzer, die schnell das passende Geschenkformat suchen.' %}
+      </div>
+    {% else %}
+      <div class="la-premium-panel__intro">
+        <p class="la-premium-panel__eyebrow">Schenken mit Aha-Effekt</p>
+        <h3 class="la-premium-panel__title">Geldgeschenke, die nicht beliebig wirken</h3>
+        <p class="la-premium-panel__intro-copy">Diese Kategorie lebt davon, dass Nutzer in Sekunden verstehen: Das ist kreativ, hochwertig und trotzdem sofort verschenkbar.</p>
+        <a class="la-premium-panel__primary-link" href="/pages/geldgeschenke-ideen">Zu den Geldgeschenk-Ideen</a>
+      </div>
+      <div class="la-premium-panel__links">
+        <div class="la-premium-panel__group">
+          <p class="la-premium-panel__group-title">Kategorien</p>
+          <a href="/collections/geldgeschenke">Alle Geldgeschenke</a>
+          <a href="/collections/geldgeschenk-geburtstag">Geldgeschenk Geburtstag</a>
+        </div>
+        <div class="la-premium-panel__group">
+          <p class="la-premium-panel__group-title">Schnelle Auswahl</p>
+          <a href="/collections/hochzeitsgeschenke-personalisiert">Für Hochzeiten</a>
+          <a href="/collections/geburtstagsgeschenke-personalisiert">Für Geburtstage</a>
+          <a href="/pages/reviews">Von Kunden empfohlen</a>
+        </div>
+      </div>
+      <div class="la-premium-panel__featured">
+        {% render 'la-premium-product-card', product_handle: 'geldgeschenk-zur-hochzeit-aus-holz-personalisiertes-hochzeitsauto', badge: 'Starker Hingucker', eyebrow: 'Hero Produkt', description: 'Ein Conversion-Hebel, weil Nutzen und Anlass sofort verständlich sind.' %}
+        {% render 'la-premium-product-card', product_handle: 'geldgeschenk-personalisierter-wunscherfueller-holz-weltkarte', badge: 'Reisefans', eyebrow: 'Alternative Idee', description: 'Erweitert die Kategorie Richtung hochwertiges Erlebnisgeschenk.' %}
+      </div>
+      <div class="la-premium-panel__footer">{{ utility_links }}</div>
+    {% endif %}
+
+  {% when 'familie' %}
+    {% if mobile %}
+      <div class="la-premium-mobile-panel__lead">
+        <p class="la-premium-panel__eyebrow">Zuhause mit Persönlichkeit</p>
+        <p class="la-premium-panel__intro-copy">Familie, Zuhause und Kinderzimmer als starke Wohn- und Geschenkcluster.</p>
+      </div>
+      <div class="la-premium-mobile-panel__links">
+        <a href="/collections/familienschilder">Familienschilder</a>
+        <a href="/collections/geschenk-zum-einzug">Geschenk zum Einzug</a>
+        <a href="/collections/namensschild-kinderzimmer">Namensschild Kinderzimmer</a>
+      </div>
+      <div class="la-premium-mobile-panel__featured">
+        {% render 'la-premium-product-card', product_handle: 'familienschild-personalisiert-aus-holz-und-metall-tuerkranz-familienschild', badge: 'Markenfit', eyebrow: 'Hero Produkt', description: 'Zeigt Materialqualität und Personalisierung in einem Blick.' %}
+      </div>
+    {% else %}
+      <div class="la-premium-panel__intro">
+        <p class="la-premium-panel__eyebrow">Zuhause mit Persönlichkeit</p>
+        <h3 class="la-premium-panel__title">Familie, Einzug & Kinderzimmer</h3>
+        <p class="la-premium-panel__intro-copy">Ein Cluster für Nutzer, die weniger nach Anlass und mehr nach Wohngefühl, Familienbezug oder Namenspersonalisierung einkaufen.</p>
+        <a class="la-premium-panel__primary-link" href="/pages/familie-geschenke">Zur Familienwelt</a>
+      </div>
+      <div class="la-premium-panel__links">
+        <div class="la-premium-panel__group">
+          <p class="la-premium-panel__group-title">Produktwelten</p>
+          <a href="/collections/familienschilder">Familienschilder</a>
+          <a href="/collections/geschenk-zum-einzug">Geschenk zum Einzug</a>
+          <a href="/collections/namensschild-kinderzimmer">Namensschild Kinderzimmer</a>
+        </div>
+        <div class="la-premium-panel__group">
+          <p class="la-premium-panel__group-title">Content & Vertrauen</p>
+          <a href="/blogs/news/turschild-furs-kinderzimmer-der-grosse-eltern-guide">Kinderzimmer-Ratgeber</a>
+          <a href="/pages/uber-uns">Über LaserArt</a>
+          <a href="/pages/reviews">Kundenbewertungen</a>
+        </div>
+      </div>
+      <div class="la-premium-panel__featured">
+        {% render 'la-premium-product-card', product_handle: 'familienschild-personalisiert-aus-holz-und-metall-tuerkranz-familienschild', badge: 'Markenfit', eyebrow: 'Hero Produkt', description: 'Transportiert die LaserArt-Signatur mit einem Blick.' %}
+        {% render 'la-premium-product-card', product_handle: 'tuerkranz-mit-name-aus-holz', badge: 'Für Zuhause', eyebrow: 'Direkt entdecken', description: 'Ein klarer schneller Kaufpfad für Einzug und Familienhaushalte.' %}
+      </div>
+      <div class="la-premium-panel__footer">{{ utility_links }}</div>
+    {% endif %}
+
+  {% when 'anlass' %}
+    {% if mobile %}
+      <div class="la-premium-mobile-panel__lead">
+        <p class="la-premium-panel__eyebrow">Nach Anlass denken</p>
+        <p class="la-premium-panel__intro-copy">Für Kunden, die schon wissen, wann sie schenken, aber noch nicht genau was.</p>
+      </div>
+      <div class="la-premium-mobile-panel__links">
+        <a href="/collections/geburtstagsgeschenke-personalisiert">Geburtstagsgeschenke</a>
+        <a href="/collections/vatertag-geschenke-personalisiert">Vatertag Geschenke</a>
+        <a href="/collections/muttertag-geschenke-personalisiert">Muttertag Geschenke</a>
+        <a href="/collections/weihnachtsgeschenke-personalisiert">Weihnachtsgeschenke</a>
+      </div>
+      <div class="la-premium-mobile-panel__featured">
+        {% render 'la-premium-product-card', product_handle: 'personalisiertes-holzbrett-geschenk-mit-gravur', badge: 'Geburtstag', eyebrow: 'Hero Produkt', description: 'Passt als Allrounder in mehrere Anlasswelten.' %}
+      </div>
+    {% else %}
+      <div class="la-premium-panel__intro">
+        <p class="la-premium-panel__eyebrow">Nach Anlass denken</p>
+        <h3 class="la-premium-panel__title">Geschenke nach Anlass</h3>
+        <p class="la-premium-panel__intro-copy">Der schnellste Weg für Kunden mit konkretem Demand. Weniger stöbern, schneller ins passende Sortiment.</p>
+        <a class="la-premium-panel__primary-link" href="/pages/geschenke-anlass">Zu allen Anlässen</a>
+      </div>
+      <div class="la-premium-panel__links">
+        <div class="la-premium-panel__group">
+          <p class="la-premium-panel__group-title">Beliebte Anlässe</p>
+          <a href="/collections/geburtstagsgeschenke-personalisiert">Geburtstagsgeschenke</a>
+          <a href="/collections/vatertag-geschenke-personalisiert">Vatertag Geschenke</a>
+          <a href="/collections/muttertag-geschenke-personalisiert">Muttertag Geschenke</a>
+          <a href="/collections/weihnachtsgeschenke-personalisiert">Weihnachtsgeschenke</a>
+        </div>
+        <div class="la-premium-panel__group">
+          <p class="la-premium-panel__group-title">Schneller entscheiden</p>
+          <a href="/collections/geschenke-fuer-maenner-personalisiert">Geschenke für Männer</a>
+          <a href="/collections/geschenke-fuer-paare">Geschenke für Paare</a>
+          <a href="/blogs/news">Im Blog inspirieren lassen</a>
+        </div>
+      </div>
+      <div class="la-premium-panel__featured">
+        {% render 'la-premium-product-card', product_handle: 'personalisiertes-holzbrett-geschenk-mit-gravur', badge: 'Geburtstag', eyebrow: 'Hero Produkt', description: 'Ein breiter Anlass-Fit für schnelle erste Entscheidungen.' %}
+        {% render 'la-premium-product-card', product_handle: 'flaschenoeffner-geburtstag-mann-personalisiert-geschenk-fuer-maenner', badge: 'Für ihn', eyebrow: 'Direkt zum Demand', description: 'Starker Shortcut für Suchanfragen mit klarer Zielgruppe.' %}
+      </div>
+      <div class="la-premium-panel__footer">{{ utility_links }}</div>
+    {% endif %}
+
+  {% when 'alle-geschenke' %}
+    {% if mobile %}
+      <div class="la-premium-mobile-panel__lead">
+        <p class="la-premium-panel__eyebrow">Unsere Unikate</p>
+        <p class="la-premium-panel__intro-copy">Der kuratierte Einstieg für Nutzer, die offen stöbern, aber nicht in einem Standard-Katalog landen wollen.</p>
+      </div>
+      <div class="la-premium-mobile-panel__links">
+        <a href="/collections/personalisierte-holzgeschenke">Alle Geschenke</a>
+        <a href="/collections/geschenke-fuer-maenner-personalisiert">Geschenke für Männer</a>
+        <a href="/collections/schmuckkaestchen-personalisiert">Schmuckkästchen</a>
+        <a href="/collections/koordinatenkarte-personalisiert">Koordinatenkarte</a>
+      </div>
+      <div class="la-premium-mobile-panel__featured">
+        {% render 'la-premium-product-card', product_handle: 'koordinatenkarte-aus-holz-personalisiert-geschenk-fuer-paare-und-erinnerung-fuer-paare', badge: 'Besonders emotional', eyebrow: 'Hero Produkt', description: 'Ein starker Discovery-Pfad für offene Geschenk-Suchen.' %}
+      </div>
+    {% else %}
+      <div class="la-premium-panel__intro">
+        <p class="la-premium-panel__eyebrow">Unsere Unikate</p>
+        <h3 class="la-premium-panel__title">Alle Geschenke, ohne 08/15-Kataloggefühl</h3>
+        <p class="la-premium-panel__intro-copy">Der breite Discovery-Einstieg bleibt semantisch klar, wirkt aber mit kuratierter Produktauswahl deutlich exklusiver.</p>
+        <a class="la-premium-panel__primary-link" href="/collections/personalisierte-holzgeschenke">Zum Gesamtsortiment</a>
+      </div>
+      <div class="la-premium-panel__links">
+        <div class="la-premium-panel__group">
+          <p class="la-premium-panel__group-title">Shop entdecken</p>
+          <a href="/collections/personalisierte-holzgeschenke">Alle Geschenke</a>
+          <a href="/collections/geschenke-fuer-maenner-personalisiert">Geschenke für Männer</a>
+          <a href="/collections/schmuckkaestchen-personalisiert">Schmuckkästchen</a>
+          <a href="/collections/koordinatenkarte-personalisiert">Koordinatenkarte</a>
+        </div>
+        <div class="la-premium-panel__group">
+          <p class="la-premium-panel__group-title">Schnelle Orientierung</p>
+          <a href="/pages/geschenke-anlass">Nach Anlass shoppen</a>
+          <a href="/pages/hochzeit">Hochzeitswelt</a>
+          <a href="/blogs/news">Inspiration im Blog</a>
+        </div>
+      </div>
+      <div class="la-premium-panel__featured">
+        {% render 'la-premium-product-card', product_handle: 'koordinatenkarte-aus-holz-personalisiert-geschenk-fuer-paare-und-erinnerung-fuer-paare', badge: 'Besonders emotional', eyebrow: 'Hero Produkt', description: 'Ideal für Nutzer mit offener Suche, aber hohem Anspruch.' %}
+        {% render 'la-premium-product-card', product_handle: 'personalisierte-schmuckbox-geschenk-mit-gravur', badge: 'Beliebtes Geschenk', eyebrow: 'Direkt kaufen', description: 'Hebt die Vielfalt des Sortiments mit einem klaren Kaufimpuls hervor.' %}
+      </div>
+      <div class="la-premium-panel__footer">{{ utility_links }}</div>
+    {% endif %}
+
+  {% when 'blog' %}
+    {% assign featured_article = blogs.news.articles.first %}
+    {% assign second_article = blogs.news.articles[1] %}
+    {% if mobile %}
+      <div class="la-premium-mobile-panel__lead">
+        <p class="la-premium-panel__eyebrow">Inspiration & SEO</p>
+        <p class="la-premium-panel__intro-copy">Ratgeber, Geschenkideen und thematische Einstiege, die Marke und Sichtbarkeit zugleich aufladen.</p>
+      </div>
+      <div class="la-premium-mobile-panel__links">
+        <a href="/blogs/news">Alle Artikel</a>
+        {% if featured_article != blank %}<a href="{{ featured_article.url }}">{{ featured_article.title }}</a>{% endif %}
+        {% if second_article != blank %}<a href="{{ second_article.url }}">{{ second_article.title }}</a>{% endif %}
+      </div>
+      <div class="la-premium-mobile-panel__featured">
+        {% render 'la-premium-article-card', article: featured_article, badge: 'Neu im Blog', eyebrow: 'Inspiration', description: 'Content, der Suchintention und Kaufidee zusammenführt.' %}
+      </div>
+    {% else %}
+      <div class="la-premium-panel__intro">
+        <p class="la-premium-panel__eyebrow">Inspiration & SEO</p>
+        <h3 class="la-premium-panel__title">Der Blog als kuratierter Ideenhub</h3>
+        <p class="la-premium-panel__intro-copy">Nicht nur für Google, sondern als echter Beratungs- und Inspirationslayer innerhalb des Shops.</p>
+        <a class="la-premium-panel__primary-link" href="/blogs/news">Zum Blog</a>
+      </div>
+      <div class="la-premium-panel__links">
+        <div class="la-premium-panel__group">
+          <p class="la-premium-panel__group-title">Aktuelle Themen</p>
+          {% if featured_article != blank %}<a href="{{ featured_article.url }}">{{ featured_article.title }}</a>{% endif %}
+          {% if second_article != blank %}<a href="{{ second_article.url }}">{{ second_article.title }}</a>{% endif %}
+          <a href="/blogs/news">Alle Artikel ansehen</a>
+        </div>
+        <div class="la-premium-panel__group">
+          <p class="la-premium-panel__group-title">Beliebte Themencluster</p>
+          <a href="/blogs/news">Geschenkideen</a>
+          <a href="/blogs/news">Hochzeit</a>
+          <a href="/blogs/news">Taufe & Geburt</a>
+        </div>
+      </div>
+      <div class="la-premium-panel__featured">
+        {% render 'la-premium-article-card', article: featured_article, badge: 'Neu im Blog', eyebrow: 'Inspiration', description: 'Stärkt Marke, Suchsichtbarkeit und Onsite-Orientierung zugleich.' %}
+        {% render 'la-premium-article-card', article: second_article, badge: 'Lesetipp', eyebrow: 'Ratgeber', description: 'Perfekt für Nutzer, die noch Ideen und Sicherheit brauchen.' %}
+      </div>
+      <div class="la-premium-panel__footer">{{ utility_links }}</div>
+    {% endif %}
+
+  {% when 'ueber-uns' %}
+    {% if mobile %}
+      <div class="la-premium-mobile-panel__lead">
+        <p class="la-premium-panel__eyebrow">Marke & Vertrauen</p>
+        <p class="la-premium-panel__intro-copy">Die LaserArt-Story, Bewertungen und Servicepfade klar gebündelt.</p>
+      </div>
+      <div class="la-premium-mobile-panel__links">
+        <a href="/pages/uber-uns">Unsere Geschichte</a>
+        <a href="/pages/reviews">Kundenbewertungen</a>
+        <a href="/pages/versand">Versand</a>
+        <a href="/pages/kontakt">Kontakt</a>
+        <a href="/pages/faq-du-fragst-wir-antworten">FAQ</a>
+      </div>
+    {% else %}
+      <div class="la-premium-panel__intro">
+        <p class="la-premium-panel__eyebrow">Marke & Vertrauen</p>
+        <h3 class="la-premium-panel__title">LaserArt Germany, bewusst nicht beliebig</h3>
+        <p class="la-premium-panel__intro-copy">Die Marke soll im Menü nicht wie ein Pflichtpunkt wirken, sondern wie ein Vertrauenstreiber für hochwertige, individuelle Produkte.</p>
+        <a class="la-premium-panel__primary-link" href="/pages/uber-uns">Unsere Geschichte</a>
+      </div>
+      <div class="la-premium-panel__links">
+        <div class="la-premium-panel__group">
+          <p class="la-premium-panel__group-title">Vertrauen</p>
+          <a href="/pages/reviews">Kundenbewertungen</a>
+          <a href="/pages/versand">Versand</a>
+          <a href="/pages/kontakt">Kontakt</a>
+          <a href="/pages/faq-du-fragst-wir-antworten">FAQ</a>
+        </div>
+        <div class="la-premium-panel__group">
+          <p class="la-premium-panel__group-title">Was LaserArt ausmacht</p>
+          <span>Handgefertigt in Deutschland</span>
+          <span>Personalisierung mit Liebe zum Detail</span>
+          <span>Kein Standard-Shopify-Look, sondern eine klare Markenwelt</span>
+        </div>
+      </div>
+      <div class="la-premium-panel__featured la-premium-panel__featured--single">
+        <div class="la-premium-story-card">
+          <p class="la-premium-story-card__eyebrow">Warum dieser Bereich sichtbar bleibt</p>
+          <h3>Premium braucht nicht nur gute Produkte, sondern spürbares Vertrauen.</h3>
+          <p>Deshalb bündeln wir hier Story, Service und Social Proof, statt sie irgendwo im Footer zu verstecken.</p>
+          <a href="/pages/reviews">Bewertungen lesen</a>
+        </div>
+      </div>
+      <div class="la-premium-panel__footer">{{ utility_links }}</div>
+    {% endif %}
+{% endcase %}
