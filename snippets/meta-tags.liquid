@@ -144,15 +144,16 @@
 
 {%- liquid
   assign meta_title_base = page_title | strip
-  assign meta_title_limit = 72
+  assign meta_title_limit = 65
+  assign omit_shop_suffix_for_compact_title = false
 
-  if request.page_type == 'product' or request.page_type == 'article' or request.page_type == 'blog'
-    assign meta_title_limit = 72
-  elsif request.page_type == 'collection'
-    assign meta_title_limit = 70
+  if request.page_type == 'product' or request.page_type == 'article' or request.page_type == 'blog' or request.page_type == 'collection'
+    assign omit_shop_suffix_for_compact_title = true
   endif
 
   if page_title contains shop.name
+    assign meta_title_output = meta_title_base | truncate: meta_title_limit, ''
+  elsif omit_shop_suffix_for_compact_title
     assign meta_title_output = meta_title_base | truncate: meta_title_limit, ''
   else
     assign meta_title_suffix = ' | ' | append: shop.name
