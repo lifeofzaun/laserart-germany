@@ -14,18 +14,70 @@
       >
     {%- endif -%}
 
-    {% comment %} This a way to wait for main content to load when navigating to a new page so that the view transitions can work consistently {% endcomment %}
-    {% if settings.transition_to_main_product or settings.page_transition_enabled %}
-      <link
-        rel="expect"
-        href="#MainContent"
-        blocking="render"
-        id="view-transition-render-blocker"
-      >
-    {% endif %}
+    <link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+    <link rel="dns-prefetch" href="https://www.youtube.com">
+    <link rel="dns-prefetch" href="https://player.vimeo.com">
 
     {%- render 'meta-tags' -%}
+
+    {%- comment -%} hreflang für internationale SEO {%- endcomment -%}
+    {%- if localization.available_languages.size > 1 or localization.available_countries.size > 1 -%}
+      {%- for language in localization.available_languages -%}
+        <link
+          rel="alternate"
+          hreflang="{{ language.iso_code }}"
+          href="{{ request.origin }}{{ request.path }}?locale={{ language.iso_code }}"
+        >
+      {%- endfor -%}
+      <link
+        rel="alternate"
+        hreflang="x-default"
+        href="{{ canonical_url }}"
+      >
+    {%- endif -%}
+
+    {%- comment -%} LCP Image Preload — nur für Seiten mit sicher verfügbaren Bildobjekten {%- endcomment -%}
+    {%- if template.name == 'product' and product.featured_image -%}
+      <link
+        rel="preload"
+        as="image"
+        imagesrcset="{{ product.featured_image | image_url: width: 400 }} 400w, {{ product.featured_image | image_url: width: 800 }} 800w, {{ product.featured_image | image_url: width: 1200 }} 1200w"
+        imagesizes="(min-width: 750px) 50vw, 100vw"
+        href="{{ product.featured_image | image_url: width: 800 }}"
+        fetchpriority="high"
+      >
+    {%- elsif template.name == 'collection' and collection.image -%}
+      <link
+        rel="preload"
+        as="image"
+        imagesrcset="{{ collection.image | image_url: width: 750 }} 750w, {{ collection.image | image_url: width: 1100 }} 1100w, {{ collection.image | image_url: width: 1500 }} 1500w"
+        imagesizes="100vw"
+        href="{{ collection.image | image_url: width: 1100 }}"
+        fetchpriority="high"
+      >
+    {%- elsif template.name == 'index' -%}
+      {%- comment -%} LCP-Preload für das erste Slideshow-Bild auf der Startseite {%- endcomment -%}
+      {%- for section in template.sections.values -%}
+        {%- if section.type == 'slideshow' -%}
+          {%- assign first_slide = section.blocks.first -%}
+          {%- if first_slide and first_slide.settings.media_type_1 == 'image' and first_slide.settings.image_1 -%}
+            <link
+              rel="preload"
+              as="image"
+              imagesrcset="{{ first_slide.settings.image_1 | image_url: width: 832 }} 832w, {{ first_slide.settings.image_1 | image_url: width: 1200 }} 1200w, {{ first_slide.settings.image_1 | image_url: width: 1920 }} 1920w"
+              imagesizes="(min-width: 750px) 100vw, 100vw"
+              href="{{ first_slide.settings.image_1 | image_url: width: 832 }}"
+              fetchpriority="high"
+            >
+          {%- endif -%}
+          {%- break -%}
+        {%- endif -%}
+      {%- endfor -%}
+    {%- endif -%}
+
     {%- render 'stylesheets' -%}
+    {{ 'la-static-pages.css' | asset_url | stylesheet_tag }}
     {%- render 'fonts' -%}
     {%- render 'scripts' -%}
     {%- render 'theme-styles-variables' -%}
@@ -38,20 +90,37 @@
     {{ content_for_header }}
   </head>
 
-  <body class="page-width-{{ settings.page_width }} card-hover-effect-{{ settings.card_hover_effect }}">
+  {%- liquid
+    assign la_static_page_handles = 'ueber-uns,uber-uns,kontakt,versand,agb,agbs,widerrufsbelehrung,widerruf,impressum,datenschutzerklaerung,datenschutz' | split: ','
+    assign is_la_static_page = false
+    assign seo_h1_fallback = ''
+    assign seo_page_identifier = page.handle | default: request.path | default: canonical_url
+
+    if template.name == 'page'
+      if la_static_page_handles contains page.handle
+        assign is_la_static_page = true
+      endif
+
+      case seo_page_identifier
+        when 'kontakt'
+          assign seo_h1_fallback = 'Kontakt'
+        when 'hochzeit'
+          assign seo_h1_fallback = 'Hochzeit — für euren Moment, für eure Menschen'
+        when '/pages/kontakt'
+          assign seo_h1_fallback = 'Kontakt'
+        when '/pages/hochzeit'
+          assign seo_h1_fallback = 'Hochzeit — für euren Moment, für eure Menschen'
+      endcase
+    endif
+  -%}
+  <body class="page-width-{{ settings.page_width }} card-hover-effect-{{ settings.card_hover_effect }}{% if template.name == 'page' %} template-page{% endif %}{% if is_la_static_page %} la-static-page page-handle-{{ page.handle }}{% endif %}">
     {% render 'skip-to-content-link', href: '#MainContent', text: 'accessibility.skip_to_text' %}
     <div id="header-group">
       {% sections 'header-group' %}
     </div>
 
     <script>
-      // Inline header height and menu style calculations to prevent layout shift
-      // Note: Updates in calculateHeaderGroupHeight(), updateTransparentHeaderOffset() and setHeaderMenuStyle() utilities.js should be kept in sync with this function
       (function setHeaderHeighCustomProperties() {
-        /*
-         * Header calculation functions for maintaining CSS variables
-         * Mimic calculateHeaderGroupHeight() in utilities.js
-         */
         const header = document.querySelector('header-component');
         const headerGroup = document.querySelector('#header-group');
         const hasHeaderSection = headerGroup?.querySelector('.header-section');
@@ -61,7 +130,6 @@
         const headerTopRow = header.querySelector('.header__row--top');
         const headerHeight = header.offsetHeight;
 
-        // Calculate the total height of the header group
         let headerGroupHeight = 0;
         const children = headerGroup.children;
         for (let i = 0; i < children.length; i++) {
@@ -70,12 +138,10 @@
           headerGroupHeight += element.offsetHeight;
         }
 
-        // Check for transparent header special case
         if (header.hasAttribute('transparent') && header.parentElement?.nextElementSibling) {
           headerGroupHeight += headerHeight;
         }
 
-        // Set CSS variables
         document.body.style.setProperty('--header-height', `${headerHeight}px`);
         document.body.style.setProperty('--header-group-height', `${headerGroupHeight}px`);
 
@@ -85,18 +151,12 @@
           });
         }
 
-        /**
-         * Updates CSS custom properties for transparent header offset calculation
-         * Mimic updateTransparentHeaderOffset() in utilities.js
-         */
-
         if (!hasHeaderSection || !header?.hasAttribute('transparent')) {
           document.body.style.setProperty('--transparent-header-offset-boolean', '0');
           return;
         }
 
         const hasImmediateSection = hasHeaderSection.nextElementSibling?.classList.contains('shopify-section');
-
         const shouldApplyOffset = !hasImmediateSection ? '1' : '0';
         document.body.style.setProperty('--transparent-header-offset-boolean', shouldApplyOffset);
       })();
@@ -120,8 +180,26 @@
       data-product-transition="{{ settings.transition_to_main_product }}"
       data-template="{{ template }}"
     >
+      {%- if seo_h1_fallback != blank -%}
+        <h1 class="visually-hidden" data-seo-h1-fallback>{{ seo_h1_fallback }}</h1>
+      {%- endif -%}
       {{ content_for_layout }}
     </main>
+
+    {%- if seo_h1_fallback != blank -%}
+      <script>
+        (function removeSeoH1FallbackWhenPrimaryHeadingExists() {
+          const mainContent = document.getElementById('MainContent');
+          const fallbackHeading = mainContent?.querySelector('[data-seo-h1-fallback]');
+          if (!mainContent || !fallbackHeading) return;
+
+          const h1Elements = mainContent.querySelectorAll('h1');
+          if (h1Elements.length > 1) {
+            fallbackHeading.remove();
+          }
+        })();
+      </script>
+    {%- endif -%}
 
     <footer>
       {% sections 'footer-group' %}
@@ -132,5 +210,7 @@
     {% if settings.quick_add or settings.mobile_quick_add %}
       {% render 'quick-add-modal' %}
     {% endif %}
+
+
   </body>
 </html>
