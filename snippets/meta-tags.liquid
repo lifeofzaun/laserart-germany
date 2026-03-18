@@ -142,12 +142,28 @@
   content="{{ og_description | escape }}"
 >
 
-<title>
-  {{ page_title }}
-  {%- if current_tags %} &ndash; tagged "{{ current_tags | join: ', ' }}"{% endif -%}
-  {%- if current_page != 1 %} &ndash; Page {{ current_page }}{% endif -%}
-  {%- unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless -%}
-</title>
+{%- liquid
+  assign meta_title_base = page_title | strip
+  assign meta_title_limit = 65
+
+  if request.page_type == 'product' or request.page_type == 'article' or request.page_type == 'blog'
+    assign meta_title_limit = 58
+  elsif request.page_type == 'collection'
+    assign meta_title_limit = 60
+  endif
+
+  if page_title contains shop.name
+    assign meta_title_output = meta_title_base | truncate: meta_title_limit, ''
+  else
+    assign meta_title_suffix = ' | ' | append: shop.name
+    assign meta_title_base_limit = meta_title_limit | minus: meta_title_suffix.size
+    if meta_title_base_limit < 30
+      assign meta_title_base_limit = 30
+    endif
+    assign meta_title_output = meta_title_base | truncate: meta_title_base_limit, '' | append: meta_title_suffix
+  endif
+-%}
+<title>{{ meta_title_output }}</title>
 
 <link
   rel="canonical"

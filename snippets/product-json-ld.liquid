@@ -1,0 +1,46 @@
+{%- liquid
+  assign schema_product = product_resource | default: product | default: closest.product
+  if schema_product != blank
+    assign schema_variant = schema_product.selected_or_first_available_variant | default: schema_product.first_available_variant | default: schema_product.variants.first
+    assign schema_product_url = request.origin | append: schema_product.url
+    assign schema_description = schema_product.description | strip_html | strip_newlines | strip
+    assign schema_brand = schema_product.vendor | default: shop.name
+    assign schema_image = schema_product.featured_image | default: schema_product.images.first
+    assign schema_availability = 'https://schema.org/OutOfStock'
+    if schema_variant != blank and schema_variant.available
+      assign schema_availability = 'https://schema.org/InStock'
+    endif
+  endif
+-%}
+{%- if schema_product != blank -%}
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Product",
+      "@id": {{ schema_product_url | append: "#product" | json }},
+      "name": {{ schema_product.title | strip_html | json }},
+      "url": {{ schema_product_url | json }},
+      {%- if schema_description != blank -%}
+        "description": {{ schema_description | json }},
+      {%- endif -%}
+      {%- if schema_image != blank -%}
+        "image": {{ schema_image | image_url: width: 1920 | prepend: "https:" | json }},
+      {%- endif -%}
+      "brand": {
+        "@type": "Brand",
+        "name": {{ schema_brand | json }}
+      },
+      {%- if schema_variant != blank and schema_variant.sku != blank -%}
+        "sku": {{ schema_variant.sku | json }},
+      {%- endif -%}
+      "offers": {
+        "@type": "Offer",
+        "@id": {{ schema_product_url | append: "#offer" | json }},
+        "url": {{ schema_product_url | json }},
+        "priceCurrency": {{ cart.currency.iso_code | default: shop.currency | json }},
+        "price": {{ schema_variant.price | divided_by: 100.0 | json }},
+        "availability": {{ schema_availability | json }}
+      }
+    }
+  </script>
+{%- endif -%}

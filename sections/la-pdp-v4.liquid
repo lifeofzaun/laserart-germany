@@ -1,37 +1,45 @@
+{% comment %}
+  LA PDP v4 — Snocks-Level Premium Product Section
+  Architecture: Custom HTML wrapper — bypasses product-information-content
+  Key difference from v3: own .la-pdp__hero grid, NOT calling
+  render 'product-information-content' — full layout control
+  Version: 4.0.0 — 2026-03-14
+{% endcomment %}
 
-
+{%- comment %} Structured Data — Product JSON-LD {%- endcomment %}
 {%- render 'product-json-ld', product_resource: closest.product -%}
 
 {%- render 'schema-breadcrumb', product: closest.product -%}
 
-{{- 'la-premium-product.css' | asset_url | stylesheet_tag -}}
+{{- 'la-pdp-v4.css' | asset_url | stylesheet_tag -}}
 
-{% capture media_gallery %}
+{%- comment %} Capture blocks separately for custom layout {%- endcomment %}
+{%- capture la_gallery -%}
   {%- content_for 'block',
     type: '_product-media-gallery',
     id: 'media-gallery',
     closest.product: closest.product
   -%}
-{% endcapture %}
+{%- endcapture -%}
 
-{% capture product_details %}
-  {% content_for 'block',
+{%- capture la_buybox -%}
+  {%- content_for 'block',
     type: '_product-details',
     id: 'product-details',
     closest.product: closest.product
-  %}
-{% endcapture %}
+  -%}
+{%- endcapture -%}
 
-{% capture additional_blocks %}
-  {% content_for 'blocks' %}
-{% endcapture %}
+{%- capture la_extra -%}
+  {%- content_for 'blocks' -%}
+{%- endcapture -%}
 
-{% if section.settings.enable_sticky_add_to_cart %}
-  {% liquid
+{%- comment %} Sticky ATC {%- endcomment %}
+{%- if section.settings.enable_sticky_add_to_cart -%}
+  {%- liquid
     assign current_variant = product.selected_or_first_available_variant
-    # Get the initial quantity based on quantity rules
     assign initial_quantity = current_variant.quantity_rule.min | default: 1
-  %}
+  -%}
 
   <sticky-add-to-cart
     class="sticky-add-to-cart"
@@ -48,14 +56,12 @@
       role="region"
       aria-label="{{ 'products.product.sticky_add_to_cart' | t }}"
     >
-      {% liquid
+      {%- liquid
         assign image_to_show = current_variant.featured_image | default: product.featured_image
-      %}
-      {% if image_to_show %}
-        <div
-          class="sticky-add-to-cart__image"
-        >
-          {% assign image_alt = image_to_show.alt | default: product.title | escape %}
+      -%}
+      {%- if image_to_show -%}
+        <div class="sticky-add-to-cart__image">
+          {%- assign image_alt = image_to_show.alt | default: product.title | escape -%}
           {{
             image_to_show
             | image_url: width: 120
@@ -69,20 +75,20 @@
               ref: 'productImage'
           }}
         </div>
-      {% endif %}
+      {%- endif -%}
 
-      {% liquid
+      {%- liquid
         assign has_single_option = false
         if product.has_only_default_variant != true and product.options.size == 1
           assign has_single_option = true
         endif
-
         if image_to_show == blank
           assign has_image = false
         else
           assign has_image = true
         endif
-      %}
+      -%}
+
       <div
         class="sticky-add-to-cart__info"
         data-has-image="{{ has_image }}"
@@ -102,12 +108,12 @@
             style="display: none;"
           {% endif %}
         >
-          {% unless product.has_only_default_variant %}
-            {% if current_variant != blank %}
-              {% assign variant_title = current_variant.title | escape %}
-            {% endif %}
+          {%- unless product.has_only_default_variant -%}
+            {%- if current_variant != blank -%}
+              {%- assign variant_title = current_variant.title | escape -%}
+            {%- endif -%}
             {{ variant_title }}
-          {% endunless %}
+          {%- endunless -%}
         </div>
       </div>
 
@@ -115,7 +121,7 @@
         class="sticky-add-to-cart__price"
         data-testid="sticky-price-display"
       >
-        {% render 'price', product_resource: product, show_sale_price_first: true %}
+        {%- render 'price', product_resource: product, show_sale_price_first: true -%}
       </div>
 
       <button
@@ -123,18 +129,14 @@
         class="sticky-add-to-cart__button add-to-cart-button button"
         ref="addToCartButton"
         on:click="/handleAddToCartClick"
-        {% unless current_variant.available %}
-          disabled
-        {% endunless %}
+        {% unless current_variant.available %}disabled{% endunless %}
       >
-        <span
-          class="add-to-cart-text"
-        >
-          {% if current_variant.available %}
+        <span class="add-to-cart-text">
+          {%- if current_variant.available -%}
             <span class="svg-wrapper add-to-cart-icon">
               {{- 'icon-add-to-cart.svg' | inline_asset_content -}}
             </span>
-          {% endif %}
+          {%- endif -%}
           <span class="add-to-cart-text__content">
             <span>
               {%- if current_variant.available -%}
@@ -167,33 +169,59 @@
       </button>
     </div>
   </sticky-add-to-cart>
-{% endif %}
+{%- endif -%}
 
-{% render 'product-information-content',
-  product_media_size: closest.product.media.size,
-  section_id: section.id,
-  settings: section.settings,
-  media_gallery: media_gallery,
-  product_details: product_details,
-  additional_blocks: additional_blocks
-%}
+{%- comment %} ============================================================
+  CUSTOM HTML LAYOUT — no product-information-content
+  This is the fundamental difference from v3
+  Gallery + Buy Box are captured blocks placed in own grid
+============================================================ {%- endcomment %}
+
+<div class="la-pdp" id="LaserArtPDP-{{ section.id }}" data-section-id="{{ section.id }}">
+  <div class="la-pdp__inner">
+
+    <div class="la-pdp__hero">
+
+      {%- comment %} Gallery column — 60% desktop, full-width mobile {%- endcomment %}
+      <div class="la-pdp__gallery">
+        {{ la_gallery }}
+      </div>
+
+      {%- comment %} Buy box column — 40% desktop {%- endcomment %}
+      <div class="la-pdp__buy">
+        {{ la_buybox }}
+        {{ la_extra }}
+        {%- comment %} Delivery indicator — inline trust signal {%- endcomment %}
+        <div class="la-v4-delivery">
+          <span class="la-v4-delivery__dot" aria-hidden="true"></span>
+          <span>In 1–2 Werktagen versandfertig &middot; DHL Premium mit Tracking</span>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+{%- render 'product-faq', product: product -%}
+
+{%- render 'internal-links' -%}
 
 {% stylesheet %}
+  /* Sticky ATC — inherits from product-information.liquid */
   .sticky-add-to-cart__bar {
     position: fixed;
     bottom: 20px;
     left: 50%;
     opacity: 0;
     transform: translateX(-50%) translateY(calc(100% + 40px));
-    z-index: calc(var(--layer-sticky) - 1); /* Below sticky header */
-    display: block;
+    z-index: calc(var(--layer-sticky) - 1);
     width: 600px;
     border-radius: calc(
       var(--style-border-radius-buttons-primary) + min(var(--padding-sm), var(--style-border-radius-buttons-primary))
     );
     box-shadow: var(--shadow-popover);
     padding: var(--padding-sm);
-    /* Layout styling */
     display: flex;
     align-items: center;
     gap: var(--gap-md);
@@ -256,10 +284,7 @@
     object-fit: cover;
   }
 
-  .sticky-add-to-cart__info {
-    flex: 1;
-    min-width: 0; /* Allow text truncation */
-  }
+  .sticky-add-to-cart__info { flex: 1; min-width: 0; }
 
   .sticky-add-to-cart__title {
     font-size: var(--font-paragraph-medium--size);
@@ -276,16 +301,10 @@
     margin-top: var(--margin-3xs);
   }
 
-  .sticky-add-to-cart__price {
-    font-weight: var(--font-weight-semibold);
-  }
+  .sticky-add-to-cart__price { font-weight: var(--font-weight-semibold); }
 
-  .sticky-add-to-cart__button {
-    height: var(--height-buy-buttons);
-    position: relative;
-  }
+  .sticky-add-to-cart__button { height: var(--height-buy-buttons); position: relative; }
 
-  /* Mobile adjustments */
   @media screen and (max-width: 749px) {
     .sticky-add-to-cart__bar {
       bottom: 0;
@@ -293,66 +312,24 @@
       max-width: none;
       border-radius: 0;
 
-      &::before {
-        --border: 1px;
-      }
+      &::before { --border: 1px; }
     }
 
-    .sticky-add-to-cart__bar .add-to-cart-text__content {
-      display: none;
-    }
+    .sticky-add-to-cart__bar .add-to-cart-text__content { display: none; }
+    .sticky-add-to-cart__info[data-has-image='false'] { padding-left: 0; }
+    .sticky-add-to-cart__title { font-size: var(--font-paragraph--size); }
+    .sticky-add-to-cart__button { padding: var(--padding-lg); width: var(--height-buy-buttons); }
+    .sticky-add-to-cart__price { font-size: var(--font-paragraph-small--size); }
 
-    .sticky-add-to-cart__info[data-has-image='false'] {
-      padding-left: 0;
-    }
-
-    .sticky-add-to-cart__title {
-      font-size: var(--font-paragraph--size);
-    }
-
-    .sticky-add-to-cart__button {
-      padding: var(--padding-lg);
-    }
-
-    .sticky-add-to-cart__price {
-      font-size: var(--font-paragraph-small--size);
-    }
-
-    .sticky-add-to-cart__button {
-      width: var(--height-buy-buttons);
-    }
-
-    sticky-add-to-cart:not([data-variant-available='true']) .add-to-cart-text__content {
-      display: initial;
-    }
-
-    sticky-add-to-cart:not([data-variant-available='true']) .sticky-add-to-cart__button {
-      width: auto;
-    }
+    sticky-add-to-cart:not([data-variant-available='true']) .add-to-cart-text__content { display: initial; }
+    sticky-add-to-cart:not([data-variant-available='true']) .sticky-add-to-cart__button { width: auto; }
   }
 
-  /* Small mobile - hide text content and compare price */
   @media screen and (max-width: 389px) {
-    .sticky-add-to-cart__bar {
-      .compare-at-price {
-        display: none;
-      }
-    }
-
-    .sticky-add-to-cart__title {
-      display: none;
-    }
-
-    /* For product with only default variant show title */
-    .sticky-add-to-cart__info[data-singleton='true'] .sticky-add-to-cart__title {
-      display: block;
-    }
-
-    /* For single variant show title and variant, truncate both. variant should be identifiable with truncation */
-    .sticky-add-to-cart__info[data-single-option='true'] .sticky-add-to-cart__title {
-      display: block;
-    }
-
+    .sticky-add-to-cart__bar .compare-at-price { display: none; }
+    .sticky-add-to-cart__title { display: none; }
+    .sticky-add-to-cart__info[data-singleton='true'] .sticky-add-to-cart__title { display: block; }
+    .sticky-add-to-cart__info[data-single-option='true'] .sticky-add-to-cart__title { display: block; }
     .sticky-add-to-cart__info[data-single-option='true'] .sticky-add-to-cart__variant {
       display: block;
       overflow: hidden;
@@ -362,18 +339,12 @@
   }
 {% endstylesheet %}
 
-
-{%- render 'product-faq', product: product -%}
-
-{% render "internal-links" %}
-
 {% schema %}
 {
-  "name": "t:names.product_information",
+  "name": "LA PDP v4",
+  "class": "la-pdp-v4-section",
   "blocks": [
-    {
-      "type": "@app"
-    }
+    { "type": "@app" }
   ],
   "disabled_on": {
     "groups": ["header", "footer"]
@@ -382,61 +353,6 @@
     {
       "type": "header",
       "content": "t:content.layout"
-    },
-    {
-      "type": "select",
-      "id": "content_width",
-      "label": "t:settings.width",
-      "options": [
-        {
-          "value": "content-center-aligned",
-          "label": "t:options.page"
-        },
-        {
-          "value": "content-full-width",
-          "label": "t:options.full"
-        }
-      ],
-      "default": "content-center-aligned"
-    },
-    {
-      "type": "select",
-      "id": "desktop_media_position",
-      "label": "t:settings.media_position",
-      "options": [
-        {
-          "value": "left",
-          "label": "t:options.left"
-        },
-        {
-          "value": "right",
-          "label": "t:options.right"
-        }
-      ],
-      "default": "left"
-    },
-    {
-      "type": "checkbox",
-      "id": "equal_columns",
-      "label": "t:settings.equal_columns",
-      "default": false
-    },
-    {
-      "type": "checkbox",
-      "id": "limit_details_width",
-      "label": "t:settings.limit_product_details_width",
-      "default": false,
-      "visible_if": "{{ section.settings.equal_columns }}"
-    },
-    {
-      "type": "range",
-      "id": "gap",
-      "label": "t:settings.gap",
-      "min": 0,
-      "max": 48,
-      "step": 4,
-      "unit": "px",
-      "default": 16
     },
     {
       "type": "checkbox",
@@ -478,6 +394,3 @@
   "presets": []
 }
 {% endschema %}
-
-{
-{

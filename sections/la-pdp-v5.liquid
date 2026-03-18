@@ -1,0 +1,251 @@
+{% comment %}
+  LaserArt Germany — Premium PDP v8
+{% endcomment %}
+
+{%- liquid
+  assign current_variant = product.selected_or_first_available_variant
+  assign initial_quantity = current_variant.quantity_rule.min | default: 1
+
+  assign production_min_meta = product.metafields.custom.production_days_min.value | default: product.metafields.laserart.production_days_min.value
+  assign production_max_meta = product.metafields.custom.production_days_max.value | default: product.metafields.laserart.production_days_max.value
+  assign shipping_days_meta = product.metafields.custom.shipping_days.value | default: product.metafields.laserart.shipping_days.value
+  assign delivery_range_raw = product.metafields.laserart.lieferzeit_tage.value | default: product.metafields.laserart.lieferzeit_tage | default: '' | strip
+
+  if production_min_meta == blank or production_max_meta == blank
+    assign delivery_parts = delivery_range_raw | split: '-'
+    assign parsed_min = delivery_parts[0] | strip | plus: 0
+    assign parsed_max = delivery_parts[1] | strip | plus: 0
+    if parsed_min > 0 and production_min_meta == blank
+      assign production_min_meta = parsed_min
+    endif
+    if parsed_max > 0 and production_max_meta == blank
+      assign production_max_meta = parsed_max
+    endif
+  endif
+
+  assign production_min = production_min_meta | default: 2 | plus: 0
+  assign production_max = production_max_meta | default: production_min | plus: 0
+  if production_max < production_min
+    assign production_max = production_min
+  endif
+
+  assign shipping_days = shipping_days_meta | default: 2 | plus: 0
+  if shipping_days <= 0
+    assign shipping_days = 2
+  endif
+
+  assign materials_list = product.metafields.custom.etsy_materials.value
+  assign primary_material = materials_list.first | default: 'Material je nach Produkt'
+  assign material_details = product.metafields.custom.material_details.value | default: product.metafields.custom.material_details | default: 'Material, Finish und Ausführung werden pro Produkt individuell gesteuert.'
+  assign personalization_text = product.metafields.custom.personalization_details.value | default: product.metafields.custom.personalization_details | default: product.metafields.custom.etsy_personalisierungstext | default: 'Teile uns deine Personalisierungswünsche im Feld mit. Wir prüfen jede Eingabe vor der Fertigung.'
+  assign product_notice = product.metafields.custom.product_notice.value | default: product.metafields.custom.product_notice
+
+  assign compare_price_meta = product.metafields.custom.etsy_compare_price.value | default: product.metafields.custom.etsy_compare_price
+  assign compare_price = compare_price_meta | plus: 0
+  if compare_price <= 0
+    assign compare_price = product.compare_at_price_max | default: 0 | plus: 0
+  endif
+  assign current_price = current_variant.price | default: product.price_min | plus: 0
+  assign compare_active = false
+  if compare_price > current_price
+    assign compare_active = true
+    assign compare_diff = compare_price | minus: current_price
+    assign compare_percent = compare_diff | times: 100 | divided_by: compare_price
+  endif
+
+  assign micro_claim = product.metafields.custom.buybox_micro_claim.value | default: product.metafields.custom.buybox_micro_claim | default: 'Mit Liebe gefertigt für Menschen, die das Besondere schätzen.'
+  assign family_note = product.metafields.custom.family_note.value | default: product.metafields.custom.family_note | default: 'LaserArt Germany gestalten jedes Stück als kleines Familienunternehmen mit viel Sorgfalt.'
+  assign shipping_note_de = product.metafields.custom.shipping_note_de.value | default: product.metafields.custom.shipping_note_de | default: 'DHL Premium Versand mit Tracking ist inklusive. Ob der Versand innerhalb Deutschlands kostenlos ist, zeigen wir dir transparent im Checkout.'
+  assign shipping_note_intl = product.metafields.custom.shipping_note_intl.value | default: product.metafields.custom.shipping_note_intl | default: 'Wir versenden international mit Sendungsverfolgung. Die exakten Versandkosten siehst du transparent im Checkout.'
+  assign shipping_note_oos = product.metafields.custom.shipping_note_oos.value | default: product.metafields.custom.shipping_note_oos | default: 'Dieses Produkt ist aktuell nicht verfügbar. Sobald deine Variante wieder verfügbar ist, kannst du wie gewohnt mit Tracking bestellen.'
+
+  assign usp_handmade = product.metafields.custom.usp_handmade.value | default: product.metafields.custom.usp_handmade | default: 'Liebevolle Handarbeit – jedes Stück ein Unikat'
+  assign usp_shipping = product.metafields.custom.usp_shipping.value | default: product.metafields.custom.usp_shipping | default: 'Bruchsichere Verpackung & Versand mit Tracking'
+  assign shop_review_rating = shop.metafields.judgeme.all_reviews_rating.value | default: shop.metafields.judgeme.all_reviews_rating
+  assign shop_review_count = shop.metafields.judgeme.all_reviews_count.value | default: shop.metafields.judgeme.all_reviews_count
+-%}
+
+{%- render 'product-json-ld', product_resource: closest.product -%}
+{%- render 'schema-breadcrumb', product: closest.product -%}
+{{ 'la-pdp-layout.css' | asset_url | stylesheet_tag }}
+{{ 'la-pdp-buy-box.css' | asset_url | stylesheet_tag }}
+{{ 'la-pdp-variant-picker.css' | asset_url | stylesheet_tag }}
+{{ 'la-pdp-trust.css' | asset_url | stylesheet_tag }}
+{{ 'la-pdp-sticky-atc.css' | asset_url | stylesheet_tag }}
+{{ 'la-pdp-app-overrides.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'la-pdp-v5.js' | asset_url }}" defer></script>
+
+{%- capture la_gallery -%}{%- content_for 'block', type: '_product-media-gallery', id: 'media-gallery', closest.product: closest.product -%}{%- endcapture -%}
+{%- capture la_buybox_raw -%}{%- content_for 'block', type: '_product-details', id: 'product-details', closest.product: closest.product -%}{%- endcapture -%}
+
+{%- capture la_price_stack -%}
+  <div class="la-pdp-price-support">
+    <div class="la-pdp-price-support__topline">
+      {%- if compare_active -%}
+        <div class="la-pdp-compare-note" aria-label="Preisvorteil gegenüber Etsy">
+          <span class="la-pdp-compare-note__base">{{ compare_price | money }}</span>
+          <span class="la-pdp-compare-note__hint">{{ compare_percent }}% günstiger als auf Etsy</span>
+        </div>
+      {%- endif -%}
+      <p class="la-pdp-price-support__micro">{{ micro_claim }}</p>
+    </div>
+  </div>
+{%- endcapture -%}
+
+{%- capture la_variant_intro -%}<div class="la-pdp-step" data-config-step="variant"><p class="la-pdp-step__eyebrow">Schritt 1</p><div class="la-pdp-step__header"><h2>Variante wählen</h2><p>Wähle zunächst Größe oder Ausführung.</p></div></div>{%- endcapture -%}
+{%- capture la_personalization_intro -%}<div class="la-pdp-step" data-config-step="personalization"><p class="la-pdp-step__eyebrow">Schritt 2</p><div class="la-pdp-step__header"><h2>Farbe & Personalisierung</h2><p>{{ personalization_text | newline_to_br }}</p></div></div>{%- endcapture -%}
+{%- capture la_cta_intro -%}<div class="la-pdp-step la-pdp-step--cta" data-config-step="cta"><p class="la-pdp-step__eyebrow">Schritt 3</p><div class="la-pdp-step__header"><h2>Dein Unikat fertigstellen</h2><p>Transparent, sorgfältig und mit persönlichem Blick auf jedes Detail.</p></div></div>{%- endcapture -%}
+{%- capture la_post_cta_cluster -%}
+  <div class="la-pdp-post-cta-cluster">
+    <div class="la-pdp-delivery-card" data-stock-text="{{ shipping_note_de | escape }}" data-oos-text="{{ shipping_note_oos | escape }}" data-available="{{ current_variant.available }}">
+      <div class="la-pdp-delivery-card__row"><span class="la-pdp-delivery-card__label">Fertigung</span><strong>{{ production_min }}{% if production_max != production_min %}–{{ production_max }}{% endif %} Werktage</strong></div>
+      <div class="la-pdp-delivery-card__row"><span class="la-pdp-delivery-card__label">Deutschland</span><span data-delivery-stock-text>{{ shipping_note_de }}</span></div>
+      <div class="la-pdp-delivery-card__row"><span class="la-pdp-delivery-card__label">International</span><span>{{ shipping_note_intl }}</span></div>
+      <script type="application/json" class="la-pdp-variants-availability">[{%- for variant in product.variants -%}{"id":{{ variant.id }},"available":{{ variant.available | json }}}{% unless forloop.last %},{% endunless %}{%- endfor -%}]</script>
+    </div>
+    <div class="la-pdp-trust" aria-label="Servicehinweise">
+      <div class="la-pdp-trust__item">
+        <p class="la-pdp-trust__eyebrow">Handarbeit</p>
+        <strong>{{ usp_handmade }}</strong>
+      </div>
+      <div class="la-pdp-trust__item">
+        <p class="la-pdp-trust__eyebrow">Versand</p>
+        <strong>{{ usp_shipping }}</strong>
+      </div>
+      <div class="la-pdp-trust__item la-pdp-trust__item--guarantee">
+        <p class="la-pdp-trust__eyebrow">Zufriedenheitsgarantie</p>
+        <strong>Ersatz bei Transportschäden garantiert</strong>
+      </div>
+      <div class="la-pdp-trust__item">
+        <p class="la-pdp-trust__eyebrow">Made in Germany</p>
+        <strong>Kleine Kreativwerkstatt im Schwarzwald</strong>
+      </div>
+    </div>
+  </div>
+{%- endcapture -%}
+
+{%- capture la_editorial_section -%}
+  <section class="la-editorial" aria-label="Produktinformationen">
+    <div class="la-editorial__inner la-editorial__inner--asymmetric">
+      <article class="la-editorial__card la-editorial__card--warm la-editorial__card--description">
+        <p class="la-editorial__eyebrow">Mit Liebe gestaltet</p>
+        {%- if family_note != blank -%}
+          <p class="la-editorial__family-note">{{ family_note }}</p>
+        {%- endif -%}
+        <h2>{{ product.title }}</h2>
+        <div class="rte la-editorial__rte">{{ product.description }}</div>
+      </article>
+      <div class="la-editorial__side-stack">
+        <article class="la-editorial__card la-editorial__card--soft"><h3>So personalisierst du</h3><div class="rte la-editorial__rte">{{ personalization_text | newline_to_br }}</div></article>
+        <article class="la-editorial__card la-editorial__card--soft"><h3>Versand & Transparenz</h3><div class="la-editorial__meta-list"><p><strong>Deutschland:</strong> {{ shipping_note_de }}</p><p><strong>International:</strong> {{ shipping_note_intl }}</p><p><strong>Zufriedenheitsgarantie:</strong> Sollte beim Versand etwas beschädigt ankommen, kümmern wir uns unkompliziert um kostenlosen Ersatz.</p></div></article>
+        <article class="la-editorial__card la-editorial__card--soft"><h3>Material & Ausführung</h3><div class="la-editorial__meta-list"><p>{{ material_details }}</p></div></article>
+        {%- if product_notice != blank -%}
+          <article class="la-editorial__card la-editorial__card--notice"><h3>Wichtige Hinweise</h3><div class="la-editorial__meta-list"><p>{{ product_notice }}</p></div></article>
+        {%- endif -%}
+      </div>
+    </div>
+    {%- if product.metafields.custom.faq_set != blank -%}
+      <section class="la-editorial__faq-block" aria-label="Häufige Fragen">
+        <div class="la-editorial__faq-block-head">
+          <p class="la-editorial__eyebrow">Vorab geklärt</p>
+          <h3>Häufige Fragen</h3>
+          <p>Antworten auf die wichtigsten Punkte rund um Personalisierung, Fertigung und Versand.</p>
+        </div>
+        <div class="la-editorial__faq-shell">
+          {%- render 'product-faq', product: product -%}
+        </div>
+      </section>
+    {%- endif -%}
+    <section class="la-founder-feature" aria-label="Hinter LaserArt Germany">
+      <article class="la-founder-feature__card la-founder-feature__card--story">
+        <div class="la-founder-feature__portrait-wrap">
+          <img
+            class="la-founder-feature__portrait"
+            src="https://cdn.shopify.com/s/files/1/0941/7113/6375/files/Melanie-Sebastian.png?v=1767131150"
+            alt="Melanie und Sebastian von LaserArt Germany"
+            loading="lazy"
+          >
+        </div>
+        <div class="la-founder-feature__copy">
+          <p class="la-editorial__eyebrow">Atelier & Menschen</p>
+          <h3>Hinter LaserArt Germany stehen echte Menschen</h3>
+          <p>Wir sind Melanie & Sebastian – mit Herz fürs Handwerk, Liebe zum Detail und dem Anspruch, jedes Produkt so zu fertigen, als wäre es für unsere eigene Familie.</p>
+          <a class="la-founder-feature__link" href="/pages/uber-uns">Mehr über uns & unsere Geschichte</a>
+        </div>
+      </article>
+      <article class="la-founder-feature__card la-founder-feature__card--quote">
+        <div class="la-founder-feature__quote-eyebrow">Unser Anspruch</div>
+        <div class="la-founder-feature__quote">
+          <p class="la-founder-feature__quote-mark">“</p>
+          <blockquote class="la-founder-feature__quote-text">Jedes Produkt, das unser Haus verlässt, ist so gedacht, als wäre es ein Geschenk für jemanden, der uns am Herzen liegt.</blockquote>
+          <p class="la-founder-feature__quote-author">Melanie Zaun, Gründerin von LaserArt Germany</p>
+        </div>
+        {%- if shop_review_rating != blank or shop_review_count != blank -%}
+          <div class="la-founder-feature__trust" aria-label="Judge.me Bewertungen">
+            <div class="la-founder-feature__trust-inner">
+              <div class="la-founder-feature__trust-header">
+                <div class="la-founder-feature__trust-kicker">Kundenerfahrungen</div>
+                <div class="la-founder-feature__trust-stars" aria-hidden="true">★★★★★</div>
+              </div>
+              <div class="la-founder-feature__trust-copy">
+                <strong>
+                  {%- if shop_review_rating != blank -%}{{ shop_review_rating | round: 1 }}/5 {% else -%}5/5 {% endif -%}
+                  {%- if shop_review_count != blank -%} aus {{ shop_review_count }} Bewertungen{%- endif -%}
+                </strong>
+                <span>Verifizierte Shop-Bewertungen von Kunden, die LaserArt Germany bereits erlebt haben.</span>
+              </div>
+              <div class="la-founder-feature__trust-badges" aria-label="Trust Signale">
+                <span class="la-founder-feature__trust-badge">Verifiziert</span>
+                <span class="la-founder-feature__trust-badge">Judge.me</span>
+                <span class="la-founder-feature__trust-badge">Shop & Etsy</span>
+              </div>
+              <div class="la-founder-feature__trust-actions">
+                <a class="la-founder-feature__trust-link" href="/pages/reviews">Alle Bewertungen ansehen</a>
+              </div>
+            </div>
+          </div>
+        {%- endif -%}
+      </article>
+    </section>
+  </section>
+{%- endcapture -%}
+
+{%- capture price_replacement -%}{{ la_price_stack }}</product-price>{%- endcapture -%}
+{%- capture variant_replacement -%}{{ la_variant_intro }}<variant-picker{%- endcapture -%}
+{%- capture personalization_replacement -%}{{ la_personalization_intro }}<div id="shopify-block-{%- endcapture -%}
+{%- capture cta_replacement -%}{{ la_cta_intro }}<span class="buy-buttons-block{%- endcapture -%}
+{%- capture post_cta_replacement -%}{{ la_post_cta_cluster }}</product-form-component>{%- endcapture -%}
+
+{%- assign la_buybox_markup = la_buybox_raw | replace_first: '<div class="view-product-title">', '<div class="view-product-title" hidden aria-hidden="true">' -%}
+{%- assign la_buybox_markup = la_buybox_markup | replace_first: '</product-price>', price_replacement -%}
+{%- assign la_buybox_markup = la_buybox_markup | replace_first: '<variant-picker', variant_replacement -%}
+{%- assign la_buybox_markup = la_buybox_markup | replace_first: '<div id="shopify-block-', personalization_replacement -%}
+{%- assign la_buybox_markup = la_buybox_markup | replace_first: '<span class="buy-buttons-block', cta_replacement -%}
+{%- assign la_buybox_markup = la_buybox_markup | replace_first: '</product-form-component>', post_cta_replacement -%}
+
+{%- liquid
+  assign image_to_show = current_variant.featured_image | default: product.featured_image
+  assign has_sticky_image = false
+  if image_to_show != blank
+    assign has_sticky_image = true
+  endif
+-%}
+
+{%- if section.settings.enable_sticky_add_to_cart -%}
+<sticky-add-to-cart class="sticky-add-to-cart" data-variant-available="{{ current_variant.available }}" data-product-id="{{ product.id }}" data-current-variant-id="{{ current_variant.id }}" data-initial-quantity="{{ initial_quantity }}" data-default-variant-title="{{ 'products.product.default_title' | t }}">
+  <div class="sticky-add-to-cart__bar color-{{ settings.popover_color_scheme }}" data-stuck="false" ref="stickyBar" role="region" aria-label="{{ 'products.product.sticky_add_to_cart' | t }}">{%- if image_to_show -%}<div class="sticky-add-to-cart__image">{{ image_to_show | image_url: width: 120 | image_tag: loading: 'lazy', alt: image_to_show.alt | default: product.title, class: 'sticky-add-to-cart__image-img', srcset: null, sizes: null, ref: 'productImage' }}</div>{%- endif -%}<div class="sticky-add-to-cart__info" data-has-image="{{ has_sticky_image }}" data-singleton="{{ product.has_only_default_variant }}"><h3 class="sticky-add-to-cart__title">{{ product.title | escape }}</h3><div class="sticky-add-to-cart__variant" {% if product.has_only_default_variant %}style="display:none"{% endif %}>{{ current_variant.title | escape }}</div></div><button type="button" class="sticky-add-to-cart__button add-to-cart-button button" ref="addToCartButton" data-configure-trigger="sticky" {% unless current_variant.available %}disabled{% endunless %}><span class="add-to-cart-text"><span class="add-to-cart-text__content"><span>Konfiguration öffnen</span><span ref="quantityDisplay" {% if current_variant.available and initial_quantity > 1 %}style="display:inline"{% else %}style="display:none"{% endif %}> (<span ref="quantityNumber">{{ initial_quantity }}</span>)</span></span></span></button></div>
+</sticky-add-to-cart>
+{%- endif -%}
+
+<div class="la-pdp-v6" id="LaserArtPDP-{{ section.id }}" data-section-id="{{ section.id }}">
+  <nav class="la-pdp-breadcrumb" aria-label="Breadcrumb"><ol itemscope itemtype="http://schema.org/BreadcrumbList"><li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a href="/" itemprop="item"><span itemprop="name">Home</span></a><meta itemprop="position" content="1"></li>{%- if product.collections.size > 0 -%}{%- assign breadcrumb_collection = product.collections | first -%}<li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a href="{{ breadcrumb_collection.url }}" itemprop="item"><span itemprop="name">{{ breadcrumb_collection.title }}</span></a><meta itemprop="position" content="2"></li>{%- endif -%}<li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><span itemprop="name">{{ product.title | truncate: 52 }}</span><meta itemprop="position" content="3"></li></ol></nav>
+  <div class="la-pdp-v6__hero"><div class="la-pdp-v6__gallery"><script type="application/json" class="la-pdp-gallery-data">[{%- for img in product.images -%}{%- assign img_alt = img.alt | default: product.title | escape -%}{"src":"{{ img | image_url: width: 1800 }}","srcset":"{{ img | image_url: width: 900 }} 900w, {{ img | image_url: width: 1400 }} 1400w, {{ img | image_url: width: 1800 }} 1800w","alt":"{{ img_alt }}"}{% unless forloop.last %},{% endunless %}{%- endfor -%}]</script><div class="la-pdp-gallery-grid" role="region" aria-label="Produktbilder">{%- for img in product.images limit: 6 -%}{%- assign load_priority = 'lazy' -%}{%- if forloop.first -%}{%- assign load_priority = 'eager' -%}{%- endif -%}<button class="la-pdp-gallery-grid__item" type="button" data-gallery-index="{{ forloop.index0 }}" aria-label="Bild {{ forloop.index }} vergrößern">{{ img | image_url: width: 900 | image_tag: loading: load_priority, alt: img.alt | default: product.title, class: 'la-pdp-gallery-grid__image', widths: '420, 620, 900' }}{%- if forloop.index == 6 and product.images.size > 6 -%}<span class="la-pdp-gallery-grid__more">+{{ product.images.size | minus: 6 }}</span>{%- endif -%}</button>{%- endfor -%}</div><div class="la-pdp-gallery-mobile">{{ la_gallery }}</div></div><div class="la-pdp-v6__buy"><div class="la-pdp-buy-box" data-buy-box-root>{{ la_buybox_markup }}</div></div></div>
+  {{ la_editorial_section }}
+  <button class="la-pdp-mobile-summary" type="button" data-configure-trigger="mobile-summary"><span class="la-pdp-mobile-summary__price">{{ current_variant.price | money }}</span><span class="la-pdp-mobile-summary__text">Jetzt gestalten</span></button>
+  <div class="la-pdp-lightbox" id="la-pdp-lightbox-{{ section.id }}" role="dialog" aria-modal="true" aria-label="Produktbilder Galerie" aria-hidden="true" tabindex="-1"><div class="la-pdp-lightbox__backdrop"></div><button class="la-pdp-lightbox__close" type="button" aria-label="Schließen">×</button><button class="la-pdp-lightbox__nav la-pdp-lightbox__nav--prev" type="button" aria-label="Vorheriges Bild">‹</button><button class="la-pdp-lightbox__nav la-pdp-lightbox__nav--next" type="button" aria-label="Nächstes Bild">›</button><div class="la-pdp-lightbox__stage"><img class="la-pdp-lightbox__image" src="" alt="" draggable="false"></div><div class="la-pdp-lightbox__footer"><div class="la-pdp-lightbox__counter"><span class="la-pdp-lightbox__current">1</span> / <span>{{ product.images | size }}</span></div><div class="la-pdp-lightbox__thumbs" role="tablist" aria-label="Bildauswahl">{%- for img in product.images -%}<button class="la-pdp-lightbox__thumb{% if forloop.first %} is-active{% endif %}" type="button" role="tab" aria-selected="{{ forloop.first }}" data-gallery-index="{{ forloop.index0 }}">{{ img | image_url: width: 160 | image_tag: loading: 'lazy', alt: img.alt | default: product.title, class: 'la-pdp-lightbox__thumb-image' }}</button>{%- endfor -%}</div></div></div>
+</div>
+{%- render 'internal-links' -%}
+
+{% schema %}
+{ "name": "LA PDP v8", "class": "la-pdp-v6-section", "blocks": [{ "type": "@app" }], "disabled_on": { "groups": ["header", "footer"] }, "settings": [ { "type": "checkbox", "id": "enable_sticky_add_to_cart", "label": "Sticky Add-to-Cart anzeigen", "default": true }, { "type": "color_scheme", "id": "color_scheme", "label": "Farbschema", "default": "scheme-1" } ], "presets": [] }
+{% endschema %}

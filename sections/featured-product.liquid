@@ -1,8 +1,6 @@
 
 
-<script type="application/ld+json">
-  {{ section.settings.product | structured_data }}
-</script>
+{%- render 'product-json-ld', product_resource: section.settings.product -%}
 
 {%- liquid
   assign product = section.settings.product

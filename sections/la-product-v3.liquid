@@ -1,10 +1,14 @@
-
+{% comment %}
+  LA Product v3 — Premium Greenfield Section
+  Basierend auf product-information.liquid, lädt la-product-v3.css.
+  Version: 3.0.0 — 2026-03-14
+{% endcomment %}
 
 {%- render 'product-json-ld', product_resource: closest.product -%}
 
 {%- render 'schema-breadcrumb', product: closest.product -%}
 
-{{- 'la-premium-product.css' | asset_url | stylesheet_tag -}}
+{{- 'la-product-v3.css' | asset_url | stylesheet_tag -}}
 
 {% capture media_gallery %}
   {%- content_for 'block',
@@ -29,7 +33,6 @@
 {% if section.settings.enable_sticky_add_to_cart %}
   {% liquid
     assign current_variant = product.selected_or_first_available_variant
-    # Get the initial quantity based on quantity rules
     assign initial_quantity = current_variant.quantity_rule.min | default: 1
   %}
 
@@ -52,9 +55,7 @@
         assign image_to_show = current_variant.featured_image | default: product.featured_image
       %}
       {% if image_to_show %}
-        <div
-          class="sticky-add-to-cart__image"
-        >
+        <div class="sticky-add-to-cart__image">
           {% assign image_alt = image_to_show.alt | default: product.title | escape %}
           {{
             image_to_show
@@ -127,9 +128,7 @@
           disabled
         {% endunless %}
       >
-        <span
-          class="add-to-cart-text"
-        >
+        <span class="add-to-cart-text">
           {% if current_variant.available %}
             <span class="svg-wrapper add-to-cart-icon">
               {{- 'icon-add-to-cart.svg' | inline_asset_content -}}
@@ -185,7 +184,7 @@
     left: 50%;
     opacity: 0;
     transform: translateX(-50%) translateY(calc(100% + 40px));
-    z-index: calc(var(--layer-sticky) - 1); /* Below sticky header */
+    z-index: calc(var(--layer-sticky) - 1);
     display: block;
     width: 600px;
     border-radius: calc(
@@ -193,7 +192,6 @@
     );
     box-shadow: var(--shadow-popover);
     padding: var(--padding-sm);
-    /* Layout styling */
     display: flex;
     align-items: center;
     gap: var(--gap-md);
@@ -258,7 +256,7 @@
 
   .sticky-add-to-cart__info {
     flex: 1;
-    min-width: 0; /* Allow text truncation */
+    min-width: 0;
   }
 
   .sticky-add-to-cart__title {
@@ -285,7 +283,6 @@
     position: relative;
   }
 
-  /* Mobile adjustments */
   @media screen and (max-width: 749px) {
     .sticky-add-to-cart__bar {
       bottom: 0;
@@ -331,7 +328,6 @@
     }
   }
 
-  /* Small mobile - hide text content and compare price */
   @media screen and (max-width: 389px) {
     .sticky-add-to-cart__bar {
       .compare-at-price {
@@ -343,12 +339,10 @@
       display: none;
     }
 
-    /* For product with only default variant show title */
     .sticky-add-to-cart__info[data-singleton='true'] .sticky-add-to-cart__title {
       display: block;
     }
 
-    /* For single variant show title and variant, truncate both. variant should be identifiable with truncation */
     .sticky-add-to-cart__info[data-single-option='true'] .sticky-add-to-cart__title {
       display: block;
     }
@@ -362,14 +356,14 @@
   }
 {% endstylesheet %}
 
-
 {%- render 'product-faq', product: product -%}
 
 {% render "internal-links" %}
 
 {% schema %}
 {
-  "name": "t:names.product_information",
+  "name": "LA Product v3",
+  "class": "la-product-v3-section",
   "blocks": [
     {
       "type": "@app"
@@ -436,7 +430,7 @@
       "max": 48,
       "step": 4,
       "unit": "px",
-      "default": 16
+      "default": 0
     },
     {
       "type": "checkbox",
@@ -478,6 +472,3 @@
   "presets": []
 }
 {% endschema %}
-
-{
-{
