@@ -144,12 +144,12 @@
 
 {%- liquid
   assign meta_title_base = page_title | strip
-  assign meta_title_limit = 65
+  assign meta_title_limit = 72
 
   if request.page_type == 'product' or request.page_type == 'article' or request.page_type == 'blog'
-    assign meta_title_limit = 58
+    assign meta_title_limit = 72
   elsif request.page_type == 'collection'
-    assign meta_title_limit = 60
+    assign meta_title_limit = 70
   endif
 
   if page_title contains shop.name
