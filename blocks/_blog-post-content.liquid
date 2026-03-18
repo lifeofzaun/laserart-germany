@@ -1,8 +1,17 @@
 
+{%- liquid
+  assign article_content_output = article.content
+  assign article_h1_fix_handles = 'der-ultimative-guide-zu-personalisierten-taufkreuzen-bedeutung-ideen-inspiration,personalisierte-koordinaten-bilder-erinnerungen-als-stilvolle-wandkunst,turschild-furs-kinderzimmer-der-grosse-eltern-guide' | split: ','
 
+  if article_h1_fix_handles contains article.handle
+    assign article_content_output = article_content_output | replace: '.lag-hero h1{', '.lag-hero .lag-hero-title{'
+    assign article_content_output = article_content_output | replace: '<h1>', '<h2 class="lag-hero-title">'
+    assign article_content_output = article_content_output | replace: '</h1>', '</h2>'
+  endif
+-%}
 <div class="blog-post-content rte">
   <rte-formatter>
-    {{ article.content }}
+    {{ article_content_output }}
   </rte-formatter>
 </div>
 

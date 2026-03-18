@@ -1,5 +1,11 @@
 
+{%- liquid
+  assign page_h1_fallback = ''
 
+  if template.name == 'page' and page != blank and page.handle == 'kontakt'
+    assign page_h1_fallback = page.title | default: 'Kontakt'
+  endif
+-%}
 <div class="section-background color-{{ section.settings.color_scheme }}"></div>
 <div class="section page-width-content color-{{ section.settings.color_scheme }}">
   <div
@@ -15,6 +21,9 @@
       {% render 'spacing-style', settings: section.settings %}
     "
   >
+    {%- if page_h1_fallback != blank -%}
+      <h1 class="visually-hidden">{{ page_h1_fallback }}</h1>
+    {%- endif -%}
     {% content_for 'blocks' %}
   </div>
 </div>
